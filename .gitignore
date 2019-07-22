@@ -59,3 +59,21 @@ typings/
 
 # next.js build output
 .next
+API/components/basura
+API/components/caja/caja.php
+API/components/caja/entrada.php
+API/components/caja/salida.php
+API/components/carreras/carrera.php
+API/components/carreras/model/carrera.php
+API/components/carreras/controller/carrera.php
+API/components/carreras/router/carrera.php
+API/components/carreras/service/carrera.php
+API/components/alumno/controller/alumnoController.php
+API/components/alumno/model/alumno.php
+API/components/alumno/service/alumnoService.php
+API/components/db/AccesoDatos.php
+API/components/materias/router/routes-ejemplo.php
+API/components/pagos/pagos.php
+API/components/usuario/usuario.php
+API/components/usuario/validarSesion.php
+API/components/usuario/verificarUsuario.php
