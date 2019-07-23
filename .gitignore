@@ -78,6 +78,9 @@ API/components/usuario/usuario.php
 API/components/usuario/validarSesion.php
 API/components/usuario/verificarUsuario.php
 API/components/cuotas/cuotas.php
+
 API/clases/*
+API/.idea/*
 .idea
 .idea/workspace.xml
+
