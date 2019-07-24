@@ -21,6 +21,8 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false
 		}
 	}, {
-		tableName: 'turnos'
+		tableName: 'turnos',
+		timestamps:false
+
 	});
 };

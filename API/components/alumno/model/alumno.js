@@ -101,6 +101,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false
 		}
 	}, {
-		tableName: 'alumnos'
+		tableName: 'alumnos',
+		timestamps:false
 	});
 };
