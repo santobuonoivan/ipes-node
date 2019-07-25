@@ -76,7 +76,7 @@ exports.update_alumn = async function (req, res, next) {
 exports.delete_alumn = async function(req, res, next){
     try {
         let result = await alumno.update({activo:false},{where:{id:req.params.id}});
-        console.log(result);
+        //console.log(result);
         return res.send({
             ok:true,
             menssage: `${result} alumns deleted`
@@ -94,35 +94,39 @@ exports.show_alumn = async function (req, res, next) {
     try {
         let result = await alumno.findOne({
             where: {
+                id: req.params.id
+                /*
                 $or: [
                     {
                         id: {
-                            $like: req.body.id
+                            $like: req.param.id
                         }
                     },
                     {
                         dni: {
-                            $like: req.body.dni
+                            $like: req.param.dni
                         }
                     },
                     {
                         nombre: {
-                            $like: '%'+ req.body.nombre+'%'
+                            $like: '%'+ req.param.nombre+'%'
                         }
                     },
                     {
                         apellido: {
-                            $like: '%'+ req.body.apellido +'%'
+                            $like: '%'+ req.param.apellido +'%'
                         }
                     }
                 ]
+
+                 */
             }
         });
         if(!result) return res.send({
             ok: false,
             menssage:'Usuario no encontrado'
         });
-        console.log(result);
+        //console.log(result);
         return res.send({
             ok: true,
             result
@@ -150,7 +154,7 @@ exports.alumn_locations = async function (req, res, next) {
 };
 
 exports.alumn_add_locations = async function (req, res, next) {
-    //TODO validacion de los campos
+
     const alumn = await alumno.findOne(
         {
             where:{id_alumn:req.params.id}

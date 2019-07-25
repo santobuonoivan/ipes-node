@@ -1,0 +1,26 @@
+{
+  "name": "ipes-node",
+  "version": "1.0.0",
+  "description": "ipes api",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santobuonoivan/ipes-node.git"
+  },
+  "keywords": [
+    "ipes"
+  ],
+  "author": "santobuono ivan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/santobuonoivan/ipes-node/issues"
+  },
+  "homepage": "https://github.com/santobuonoivan/ipes-node#readme"
+}

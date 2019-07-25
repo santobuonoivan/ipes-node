@@ -18,7 +18,7 @@ router.post('/',[cors()/*, authMiddleware, authorization('clients','insert' )*/]
 router.put('/:id',[cors()/*, authMiddleware, authorization('clients','update')*/], alumnsController.update_alumn);
 
 /* DELETE ONE (DESACTIVATE) */
-router.delete('/:id',[cors()/*, authMiddleware, authorization('clients','delete')*/], alumnsController.delete_alumn);
+router.post('/:id',[cors()/*, authMiddleware, authorization('clients','delete')*/], alumnsController.delete_alumn);
 
 /* GET ONE */
 router.get('/:id',[cors()/*, authMiddleware, authorization('clients', 'show')*/], alumnsController.show_alumn);
