@@ -1,36 +1,17 @@
 const {username,password,database,host,port,dialect, pool} = require('./mariadb.config')[process.env.NODE_ENV];
-
 const Sequelize = require('sequelize');
-'postgres://user:pass@example.com:5432/dbname'
-/*
-const sequelize = new Sequelize(database,username,password,{
-    host:host,
-    dialect:dialect,
-    port:port,
-    logging: function () {},
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
-    },
-    define: {
-        paranoid: true
-    }
+const sequelize = new Sequelize(database,username,password, {
+    host: host,
+    dialect: dialect,
+    port: port
 });
-*/
-let uri = `${dialect}://${username}:${password}@${host}:${port}/${database}`;
-var sequelize = new Sequelize(uri);
-
-sequelize.authenticate().then(function(errors) { console.log(errors) });
-
-/*
 
 const db ={};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.usuario = require('../usuario/model/usuarios')(sequelize,Sequelize);
+db.alumno = require('../alumno/model/alumno')(sequelize,Sequelize);
 /*
 db.alumno = require('../alumno/model/alumno')(sequelize,Sequelize);
 db.caja = require('../caja/model/caja')(sequelize,Sequelize);
@@ -47,10 +28,10 @@ db.turnos = require('../turnos/model/turnos')(sequelize,Sequelize);
 */
 
 
-/*
+
 
 db.sequelize.sync({force:false}).then(() =>  {
 });
 
 module.exports =  db;
-*/
+

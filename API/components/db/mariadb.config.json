@@ -1,6 +1,14 @@
 {
   "development": {
     "username": "root",
+    "password": "",
+    "database": "ipes",
+    "host": "localhost",
+    "port": "3306",
+    "dialect": "mysql"
+  },
+  "development2": {
+    "username": "root",
     "password": "1234",
     "database": "ipes",
     "host": "172.21.0.2",

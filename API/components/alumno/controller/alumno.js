@@ -6,7 +6,7 @@ const _ = require('lodash');
 /* GET ALL */
 exports.all_alumns = async function (req, res, next) {
     try{
-        const alumnsList = await alumns.findAll();
+        const alumnsList = await alumno.findAll();
         if(alumnsList.length > 0)
             return res.send({
                 ok:true,
@@ -22,7 +22,7 @@ exports.all_alumns = async function (req, res, next) {
 exports.insert_alumn = async function (req, res, next) {
     //const { error } = alumnService.validateAlumn(req.body);
     //if(error) return res.status(400).send(error.details[0].message);
-    let alumn = await alumns.findAll({where:{dni:req.body.dni}});
+    let alumn = await alumno.findAll({where:{dni:req.body.dni}});
     if(alumn.length > 0) return res.status(400).send({
         ok:false,
         menssage:'Ya hay un alumno con el dni asignado'
@@ -30,11 +30,11 @@ exports.insert_alumn = async function (req, res, next) {
     let result = null, cont = 0;
     while(result == null && cont <=3){
         try{
-            let maxId = await alumns.sequelize.query("select max(id) from alumnos");
+            let maxId = await alumno.sequelize.query("select max(id) from alumnos");
             maxId = maxId[0][0].max;
             maxId +=1 ;
             req.body.id = maxId;
-            result = await alumns.create(req.body);
+            result = await alumno.create(req.body);
         }catch (e) {
             cont += 1;
         }
@@ -59,7 +59,7 @@ exports.update_alumn = async function (req, res, next) {
     //const { error } = alumnService.validateAlumn(req.body);
     //if(error) return res.status(400).send(error.details[0].message);
     try {
-        let result = await alumns.update(req.body,{where: {id:req.params.id}});
+        let result = await alumno.update(req.body,{where: {id:req.params.id}});
         return res.send({
             ok: true,
             menssage: `${ result } records updated`
@@ -75,7 +75,7 @@ exports.update_alumn = async function (req, res, next) {
 /* DELETE ONE (desactivar)*/
 exports.delete_alumn = async function(req, res, next){
     try {
-        let result = await alumns.update({activo:false},{where:{id:req.params.id}});
+        let result = await alumno.update({activo:false},{where:{id:req.params.id}});
         console.log(result);
         return res.send({
             ok:true,
@@ -92,7 +92,7 @@ exports.delete_alumn = async function(req, res, next){
 /* GET ONE */
 exports.show_alumn = async function (req, res, next) {
     try {
-        let result = await alumns.findOne({
+        let result = await alumno.findOne({
             where: {
                 $or: [
                     {
@@ -138,7 +138,7 @@ exports.show_alumn = async function (req, res, next) {
 /*
 exports.alumn_locations = async function (req, res, next) {
     try {
-        const alumn = await alumns.findOne({
+        const alumn = await alumno.findOne({
             where:{id_alumn:req.params.id},
             include:['locations']
         });
@@ -151,7 +151,7 @@ exports.alumn_locations = async function (req, res, next) {
 
 exports.alumn_add_locations = async function (req, res, next) {
     //TODO validacion de los campos
-    const alumn = await alumns.findOne(
+    const alumn = await alumno.findOne(
         {
             where:{id_alumn:req.params.id}
         }
@@ -181,7 +181,7 @@ exports.alumn_add_locations = async function (req, res, next) {
 
 exports.alumn_remove_locations = async function (req, res, next) {
     try{
-        let alumn = await alumns.findOne({
+        let alumn = await alumno.findOne({
             where:{id_alumn:req.params.id},
             include:['locations']
         });
@@ -198,7 +198,7 @@ exports.alumn_remove_locations = async function (req, res, next) {
                 console.log(dl);
             }
         }
-        alumn = await alumns.findOne({
+        alumn = await alumno.findOne({
             where:{id_alumn:req.params.id},
             include:['locations']
         });
