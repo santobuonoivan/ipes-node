@@ -12,11 +12,11 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.alumno = require('../alumno/model/alumno')(sequelize,Sequelize);
-/*
-db.alumno = require('../alumno/model/alumno')(sequelize,Sequelize);
 db.caja = require('../caja/model/caja')(sequelize,Sequelize);
 db.entrada = require('../caja/model/entradas')(sequelize,Sequelize);
 db.salida = require('../caja/model/salidas')(sequelize,Sequelize);
+/*
+db.alumno = require('../alumno/model/alumno')(sequelize,Sequelize);
 db.carrera = require('../carreras/model/carreras')(sequelize,Sequelize);
 db.cuotas = require('../cuotas/model/cuotas')(sequelize,Sequelize);
 db.documentacion = require('../documentacion/model/documentacion')(sequelize,Sequelize);
