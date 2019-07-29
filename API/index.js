@@ -17,8 +17,8 @@ app.use(cors());
 
 // Routes
 var alumnRoutes = require('./components/alumno/router/alumno');
+var cajaRoutes = require('./components/caja/router/caja');
 /*
-var rolesRoutes = require('./users/routes/RoleRoutes');
 var permissionsRoutes = require('./users/routes/PermissionsRoutes');
 var userRolerRoutes = require('./users/routes/UserRolesRoutes');
 var userPermissions = require('./users/routes/UserPermissionsRoutes');
@@ -34,8 +34,8 @@ var homeScreen = require('./components/graphicComponents/homeScreen/homeScreeRou
 
 
 app.use('/alumn', alumnRoutes);
+app.use('/caja',cajaRoutes);
 /*
-app.use('/auth',authRouter);
 app.use('/roles', rolesRoutes);
 app.use('/permissions', permissionsRoutes);
 app.use('/userroles', userRolerRoutes);

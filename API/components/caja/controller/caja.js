@@ -30,19 +30,20 @@ const _ = require('lodash');
     exports.insert_caja = async function (req, res, next) {
         //const { error } = alumnService.validateAlumn(req.body);
         //if(error) return res.status(400).send(error.details[0].message);
-        let caja = await alumno.findAll({where:{dni:req.body.dni}});
-        if(alumn.length > 0) return res.status(400).send({
+        let cajas = await caja.findAll({where:{fechayhora:req.body.fechayhora}});
+        if(cajas.length > 0) return res.status(400).send({
             ok:false,
-            menssage:'Ya hay un alumno con el dni asignado'
+            menssage:'Ya hay un caja con el fecha y hora asignado'
         });
         let result = null, cont = 0;
         while(result == null && cont <=3){
             try{
-                let maxId = await alumno.sequelize.query("select max(id) from alumnos");
-                maxId = maxId[0][0].max;
+                let maxId = await caja.sequelize.query("select max(id_caja) from caja");
+                maxId =  maxId[0][0]['max(id_caja)'];
+                console.log(maxId);
                 maxId +=1 ;
                 req.body.id = maxId;
-                result = await alumno.create(req.body);
+                result = await caja.create(req.body);
             }catch (e) {
                 cont += 1;
             }
@@ -58,7 +59,7 @@ const _ = require('lodash');
             return res.send({
                 ok:true,
                 result
-            })
+            });
         }
     };
 
@@ -67,7 +68,8 @@ const _ = require('lodash');
         //const { error } = alumnService.validateAlumn(req.body);
         //if(error) return res.status(400).send(error.details[0].message);
         try {
-            let result = await alumno.update(req.body,{where: {id:req.params.id}});
+            let id = parseInt(req.params.id);
+            let result = await caja.update(req.body,{where: {id_caja: id}});
             return res.send({
                 ok: true,
                 menssage: `${ result } records updated`
@@ -83,16 +85,16 @@ const _ = require('lodash');
     /* DELETE ONE (desactivar)*/
     exports.delete_caja = async function(req, res, next){
         try {
-            let result = await alumno.update({activo:false},{where:{id:req.params.id}});
+            let result = await caja.destroy({where:{id_caja:req.params.id}});
             //console.log(result);
             return res.send({
                 ok:true,
-                menssage: `${result} alumns deleted`
+                menssage: `${result} caja deleted`
             });
         }catch (e) {
             return res.status(400).send({
                 ok:false,
-                menssage:`no se puede desactivar/borrar el alumno: ${e.errors[0].message}`
+                menssage:`no se puede desactivar/borrar el caja: ${e.errors[0].message}`
             });
         }
     };
@@ -100,9 +102,9 @@ const _ = require('lodash');
     /* GET ONE */
     exports.show_caja = async function (req, res, next) {
         try {
-            let result = await alumno.findOne({
+            let result = await caja.findOne({
                 where: {
-                    id: req.params.id
+                    id_caja: req.params.id
                     /*
                     $or: [
                         {
@@ -132,7 +134,7 @@ const _ = require('lodash');
             });
             if(!result) return res.send({
                 ok: false,
-                menssage:'Usuario no encontrado'
+                menssage:'caja no encontrado'
             });
             //console.log(result);
             return res.send({
@@ -156,51 +158,137 @@ const _ = require('lodash');
             /* TODO falta verificacion del usuario a ese id_caja */
 
             /* obtengo la caja deseada */
-            const caja = await alumno.findOne({ where:{id_caja:req.params.id_caja}/*,include:['locations']*/ });
-            if(!caja) return res.status(404).send({ ok:false, message: "caja no encontrada" });
+            let id = parseInt( req.params.id );
+            const la_caja= await caja.findOne({ where:{id_caja: id}/*,include:['locations']*/ });
+            if(!la_caja) return res.status(404).send({ ok:false, message: "la caja no encontrada" });
 
             /* si existe caja y pertenece al usuario traigo todas las entradas */
-            const entradas = await entrada.find({ where:{ id_caja: caja.id_caja }/*,include:['locations']*/ });
-            if(!caja) return res.status(404).send({ ok:false, message: "cajas no encontrada" });
+            const entradas = await entrada.findAll({ where:{ id_caja: la_caja.id_caja }/*,include:['locations']*/ });
+            if(!la_caja) return res.status(404).send({ ok:false, message: "la caja no encontrada" });
 
-            return res.send({ ok:true, caja, entradas });
+            return res.send({ ok:true, la_caja, entradas });
         }catch (e) {
             return res.status(400).send({ ok: false, message: e.errors[0].message });
         }
     };
 
     /* ADD ONE (ENTRADA) IN CAJA */
-    exports.alumn_add_locations = async function (req, res, next) {
+    exports.add_entrada_caja = async function (req, res, next) {
 
         /* TODO falta verificacion del usuario a ese id_caja  y datos a mandar para la creacion */
 
-        const la_caja = await caja.findOne({ where:{id_caja:req.params.id_caja}});
-            /* TODO  verificar que no se pueda duplicar entradas*/
-            try{
+        const la_caja = await caja.findOne({ where:{id_caja:req.params.id}});
+        /* TODO  verificar que no se pueda duplicar entradas*/
+        let result = null, cont = 0;
+        while(result == null && cont <=3){
+            try {
                 let maxId = await entrada.sequelize.query("select max(id_entrada) from entradas");
-                maxId = maxId[0][0].max;
-                maxId +=1;
+                maxId = maxId[0][0]['max(id_entrada)'];
+                maxId += 1;
                 req.body.id_entrada = maxId;
                 req.body.id_caja = la_caja.id_caja;
-                let result = await entrada.create(req.body);
-            }catch (e) {
+                result = await entrada.create(req.body);
+            } catch (e) {
                 cont += 1;
             }
-
+        }
         if(cont > 3){
             return res.status(400).send({ok: false, message: "server does not respond please try again"});
         }
         if(result){
-            return res.send({ok:true,result});
+            let el_importe = parseInt(req.body.importe) + parseInt(la_caja.importe);
+            let body = { importe: el_importe };
+            if(la_caja.id_comienzo_entrada == null){
+                body.id_comienzo_entrada = req.body.id_entrada;
+            }
+            let update = await caja.update( body,{where: {id_caja: la_caja.id_caja}});
+            return res.send({ok: true, message: 'agregado correctamente la entrada', el_importe, result});
         }else{
             return res.status(400).send({ok: false, message: "no se pudo crear"});
         }
     };
+
 /* TODO FALTA HACER EL REMOVE Y CONTINUAR CON LAS SALIDAS */
+/* SALIDAS */
+
+    /* GET ALL SALIDAS OF ONE CAJA */
+    exports.all_salidas_cajas = async function (req, res, next) {
+        try {
+            /* TODO falta verificacion del usuario a ese id_caja */
+
+            /* obtengo la caja deseada */
+            let id = parseInt( req.params.id );
+            const la_caja= await caja.findOne({ where:{id_caja: id}/*,include:['locations']*/ });
+            if(!la_caja) return res.status(404).send({ ok:false, message: "la caja no encontrada" });
+
+            /* si existe caja y pertenece al usuario traigo todas las entradas */
+            const salidas = await salida.findAll({ where:{ id_caja: la_caja.id_caja }/*,include:['locations']*/ });
+            if(!la_caja) return res.status(404).send({ ok:false, message: "la caja no encontrada" });
+
+            return res.send({ ok:true, la_caja, salidas });
+        }catch (e) {
+            return res.status(400).send({ ok: false, message: e.errors[0].message });
+        }
+    };
+
+    /* ADD ONE (SALIDA) IN CAJA */
+    exports.add_salida_caja = async function (req, res, next) {
+
+        /* TODO falta verificacion del usuario a ese id_caja  y datos a mandar para la creacion */
+
+        const la_caja = await caja.findOne({ where:{id_caja:req.params.id}});
+        /* TODO  verificar que no se pueda duplicar salidas*/
+        let result = null, cont = 0;
+        while(result == null && cont <=3){
+            try {
+                let maxId = await entrada.sequelize.query("select max(id_salida) from salidas");
+                maxId = maxId[0][0]['max(id_salida)'];
+                maxId += 1;
+                req.body.id_salida = maxId;
+                req.body.id_caja = la_caja.id_caja;
+                result = await salida.create(req.body);
+            } catch (e) {
+                cont += 1;
+            }
+        }
+        if(cont > 3){
+            return res.status(400).send({ok: false, message: "server does not respond please try again"});
+        }
+        if(result){
+            let el_importe = parseInt(la_caja.importe) - parseInt(req.body.importe);
+            let body = { importe: el_importe };
+            if(la_caja.id_comienzo_salida == null){
+                body.id_comienzo_salida = req.body.id_salida;
+            }
+            let update = await caja.update( body,{where: {id_caja: la_caja.id_caja}});
+            return res.send({ok: true, message: 'agregado correctamente la salida', el_importe, result});
+        }else{
+            return res.status(400).send({ok: false, message: "no se pudo crear"});
+        }
+    };
+
+    /* CERRAR CAJA */
+    /* TODO hacer cierre de caja
+    *   update chaca cierre y devolver monto de cierre*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
     exports.alumn_remove_locations = async function (req, res, next) {
         try{
-            let alumn = await alumno.findOne({
+            let alumn = await caja.findOne({
                 where:{id_alumn:req.params.id},
                 include:['locations']
             });
@@ -217,7 +305,7 @@ const _ = require('lodash');
                     console.log(dl);
                 }
             }
-            alumn = await alumno.findOne({
+            alumn = await caja.findOne({
                 where:{id_alumn:req.params.id},
                 include:['locations']
             });
