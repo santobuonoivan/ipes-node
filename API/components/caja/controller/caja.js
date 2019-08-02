@@ -208,7 +208,23 @@ const _ = require('lodash');
         }
     };
 
-/* TODO FALTA HACER EL REMOVE Y CONTINUAR CON LAS SALIDAS */
+/* TODO FALTA HACER EL REMOVE */
+    /* REMOVE ONE (ENTRADA) IN CAJA */
+    exports.remove_entrada_caja = async function (req, res, next){
+        try {
+            let result = await entrada.destroy({where:{id_entrada:req.params.id_entrada}});
+            //console.log(result);
+            if(!result) { return res.send({ ok:false, menssage: `${result} entrada deleted error`}); }
+            else { return res.send({ ok:false, menssage: `${result} entrada deleted`}); }
+        }catch (e) {
+            return res.status(400).send({
+                ok:false,
+                menssage:`no se puede desactivar/borrar el caja: ${e.errors[0].message}`
+            });
+        }
+    };
+
+
 /* SALIDAS */
 
     /* GET ALL SALIDAS OF ONE CAJA */
@@ -267,7 +283,38 @@ const _ = require('lodash');
         }
     };
 
+    /* REMOVE ONE (SALIDA) IN CAJA */
+    exports.remove_salida_caja = async function (req, res, next){
+        try {
+            let result = await salida.destroy({where:{id_salida:req.params.id_salida}});
+            //console.log(result);
+            if(!result) { return res.send({ ok:false, menssage: `${result} salida deleted error`}); }
+            else { return res.send({ ok:false, menssage: `${result} salida deleted`}); }
+        }catch (e) {
+            return res.status(400).send({
+                ok:false,
+                menssage:`no se puede desactivar/borrar el salida: ${e.errors[0].message}`
+            });
+        }
+    };
+
     /* CERRAR CAJA */
+    exports.close_caja = async function (req, res, next){
+        try {
+            let result = await caja.findOne({ where: { id_caja: req.params.id } });
+            if(!result) return res.send({ ok: false, menssage:'caja no encontrado' });
+            let id_entrada_max = await  entrada.sequelize.query(`SELECT MAX(id_entrada) FROM entradas WHERE id_caja = ${req.params.id}`);
+            let id_salida_max = await salida.sequelize.query(`SELECT MAX(id_salida) FROM salidas WHERE id_caja = ${req.params.id}`);
+            result.id_fin_entrada = id_entrada_max;
+            result.id_fin_salida = id_salida_max;
+            let update = await  caja.update(result,{ where: {id_caja: req.params.id}});
+            if(!update) return res.send({ ok: false, menssage:'caja no encontrado' });
+            return res.send({ ok: true, update });
+        }catch (e) {
+            return res.status(400).send({ ok: false, message: e.errors[0].message });
+        }
+    };
+
     /* TODO hacer cierre de caja
     *   update chaca cierre y devolver monto de cierre*/
 
