@@ -303,35 +303,18 @@ const _ = require('lodash');
         try {
             let result = await caja.findOne({ where: { id_caja: req.params.id } });
             if(!result) return res.send({ ok: false, menssage:'caja no encontrado' });
-            let id_entrada_max = await  entrada.sequelize.query(`SELECT MAX(id_entrada) FROM entradas WHERE id_caja = ${req.params.id}`);
-            let id_salida_max = await salida.sequelize.query(`SELECT MAX(id_salida) FROM salidas WHERE id_caja = ${req.params.id}`);
-            result.id_fin_entrada = id_entrada_max;
-            result.id_fin_salida = id_salida_max;
-            let update = await  caja.update(result,{ where: {id_caja: req.params.id}});
+            let id_entrada_max = await  entrada.sequelize.query(`SELECT MAX(id_entrada) as id FROM entradas WHERE id_caja = ${req.params.id}`);
+            let id_salida_max = await salida.sequelize.query(`SELECT MAX(id_salida) as id FROM salidas WHERE id_caja = ${req.params.id}`);
+            let body = {};
+            body.id_fin_entrada = id_entrada_max[0][0].id;
+            body.id_fin_salida = id_salida_max[0][0].id;
+            let update = await  caja.update(body ,{ where: {id_caja: req.params.id}});
             if(!update) return res.send({ ok: false, menssage:'caja no encontrado' });
-            return res.send({ ok: true, update });
+            return res.send({ ok: true, update: `${ update } registros actualizados`, importe: result.importe });
         }catch (e) {
             return res.status(400).send({ ok: false, message: e.errors[0].message });
         }
     };
-
-    /* TODO hacer cierre de caja
-    *   update chaca cierre y devolver monto de cierre*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
     exports.alumn_remove_locations = async function (req, res, next) {
         try{

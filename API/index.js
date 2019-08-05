@@ -18,9 +18,9 @@ app.use(cors());
 // Routes
 var alumnRoutes = require('./components/alumno/router/alumno');
 var cajaRoutes = require('./components/caja/router/caja');
+var carrerasRoutes = require('./components/carreras/router/carrera');
+var cuotasRoutes = require('./components/cuotas/router/cuotas');
 /*
-var permissionsRoutes = require('./users/routes/PermissionsRoutes');
-var userRolerRoutes = require('./users/routes/UserRolesRoutes');
 var userPermissions = require('./users/routes/UserPermissionsRoutes');
 var clientsRoutes = require('./components/clients/routes/clientsRoutes');
 var locationsRoutes = require('./components/locations/routes/locationsRoutes');
@@ -35,9 +35,9 @@ var homeScreen = require('./components/graphicComponents/homeScreen/homeScreeRou
 
 app.use('/alumn', alumnRoutes);
 app.use('/caja',cajaRoutes);
+app.use('/carrera', carrerasRoutes);
+app.use('/cuotas', cuotasRoutes);
 /*
-app.use('/roles', rolesRoutes);
-app.use('/permissions', permissionsRoutes);
 app.use('/userroles', userRolerRoutes);
 app.use('/userpermissions', userPermissions);
 app.use('/clients', clientsRoutes);
