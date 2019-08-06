@@ -14,15 +14,15 @@ router.get('/',[cors()/*, authMiddleware, authorization('clients','list')*/ ], c
 /* TODO continuar cuotas router y agregar el traer todas por id alumno */
 
 /* ADD ONE */
-//router.post('/',[cors()/*, authMiddleware, authorization('clients','insert' )*/], cuotasController.insert_cuota);
+router.post('/',[cors()/*, authMiddleware, authorization('clients','insert' )*/], cuotasController.insert_cuota);
 
 /* UPDATE ONE */
-//router.put('/:id',[cors()/*, authMiddleware, authorization('clients','update')*/], cuotasController.update_cuota);
+router.put('/:id',[cors()/*, authMiddleware, authorization('clients','update')*/], cuotasController.update_cuota);
 
 /* DELETE ONE */
-//router.delete('/:id',[cors()/*, authMiddleware, authorization('clients','delete')*/], cuotasController.delete_cuota);
+router.delete('/:id',[cors()/*, authMiddleware, authorization('clients','delete')*/], cuotasController.delete_cuota);
 
 /* GET ONE */
-//router.get('/:id',[cors()/*, authMiddleware, authorization('clients', 'show')*/], cuotasController.show_cuota);
+router.get('/:id',[cors()/*, authMiddleware, authorization('clients', 'show')*/], cuotasController.show_cuota);
 
 module.exports = router;

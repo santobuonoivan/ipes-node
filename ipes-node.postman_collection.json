@@ -600,7 +600,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id_alumno\": 1,\n    \"concepto\": \"Matricula\",\n    \"fecha\": \"2018-01-10\",\n    \"importe\": 1900,\n    \"pasada\": null\n}"
+							"raw": "{\n\t\"id_alumno\": 1,\n    \"concepto\": \"cuota23\",\n    \"fecha\": \"2018-01-10\",\n    \"importe\": 1900,\n    \"pasada\": null\n}"
 						},
 						"url": {
 							"raw": "{{url}}/cuotas/",
@@ -639,6 +639,86 @@
 							"path": [
 								"cuotas",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ONE CUOTA",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/cuotas/1352",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuotas",
+								"1352"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ONE  CUOTA",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/cuotas/1352",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuotas",
+								"1352"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE ONE CUOTA",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"concepto\": \"cuota45\",\n    \"fecha\": \"2018-12-25\",\n    \"importe\": 7800,\n    \"pasada\": null\n}"
+						},
+						"url": {
+							"raw": "{{url}}/cuotas/1351",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cuotas",
+								"1351"
 							]
 						}
 					},

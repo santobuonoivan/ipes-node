@@ -32,23 +32,27 @@ var alarmRulesRoutes = require('./components/alarmsRules/routes/alarmRulesRoutes
 var homeScreen = require('./components/graphicComponents/homeScreen/homeScreeRoutes');
 */
 
-
 app.use('/alumn', alumnRoutes);
-app.use('/caja',cajaRoutes);
-app.use('/carrera', carrerasRoutes);
-app.use('/cuotas', cuotasRoutes);
-/*
-app.use('/userroles', userRolerRoutes);
-app.use('/userpermissions', userPermissions);
-app.use('/clients', clientsRoutes);
-app.use('/locations', locationsRoutes);
-app.use('/sectors', sectorRoutes);
-app.use('/sensortypes', sensorTypesRoutes);
-app.use('/sensors', sensorsRoutes);
-app.use('/homescreen', homeScreen);
-app.use('/alarmrules', alarmRulesRoutes);
 
- */
+/* TODO  se impleenta en los insert de alumno */
+//app.use('/documentacion', documentacionRoutes);
+
+app.use('/caja',cajaRoutes);
+
+
+app.use('/cuotas', cuotasRoutes);
+app.use('/pagos', pagosRoutes);
+
+app.use('/carrera', carrerasRoutes);
+app.use('/modalidades', modalidadesRoutes);
+app.use('/turnos', sectorRoutes);
+
+app.use('/materias', materiasRoutes);
+
+app.use('/notas', notassRoutes);
+
+app.use('/usuarios', usuariosRoutes);
+
 
 app.listen(port, function () {
     console.log(`application up and running on port: ${port}`);
