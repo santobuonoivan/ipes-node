@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('notas', {
 		id: {
 			type: DataTypes.INTEGER(11),
+			primaryKey: true,
 			allowNull: false
 		},
 		id_alumno: {

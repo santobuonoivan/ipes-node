@@ -16,12 +16,14 @@ app.use(cors());
 //app.use(express.static('./public'));
 
 // Routes
+
 var alumnRoutes = require('./components/alumno/router/alumno');
 var cajaRoutes = require('./components/caja/router/caja');
 var carrerasRoutes = require('./components/carreras/router/carrera');
 var cuotasRoutes = require('./components/cuotas/router/cuotas');
+var materiasRoutes = require('./components/materias/router/materia');
+
 /*
-var userPermissions = require('./users/routes/UserPermissionsRoutes');
 var clientsRoutes = require('./components/clients/routes/clientsRoutes');
 var locationsRoutes = require('./components/locations/routes/locationsRoutes');
 var sectorRoutes = require('./components/sector/routes/sectorRoutes');
@@ -41,17 +43,17 @@ app.use('/caja',cajaRoutes);
 
 
 app.use('/cuotas', cuotasRoutes);
-app.use('/pagos', pagosRoutes);
+/* app.use('/pagos', pagosRoutes); */
 
 app.use('/carrera', carrerasRoutes);
-app.use('/modalidades', modalidadesRoutes);
-app.use('/turnos', sectorRoutes);
+//app.use('/modalidades', modalidadesRoutes);
+//app.use('/turnos', sectorRoutes);
 
 app.use('/materias', materiasRoutes);
 
-app.use('/notas', notassRoutes);
+//app.use('/notas', notassRoutes);
 
-app.use('/usuarios', usuariosRoutes);
+//app.use('/usuarios', usuariosRoutes);
 
 
 app.listen(port, function () {

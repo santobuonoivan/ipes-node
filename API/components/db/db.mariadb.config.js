@@ -18,18 +18,18 @@ db.salida = require('../caja/model/salidas')(sequelize,Sequelize);
 db.carrera = require('../carreras/model/carreras')(sequelize,Sequelize);
 db.cuota = require('../cuotas/model/cuotas')(sequelize,Sequelize);
 db.documentacion = require('../documentacion/model/documentacion')(sequelize,Sequelize);
-db.materias = require('../materias/model/materias')(sequelize,Sequelize);
+db.materia = require('../materias/model/materias')(sequelize,Sequelize);
 db.modalidades = require('../modalidades/model/modalidades')(sequelize,Sequelize);
 db.notas = require('../notas/model/notas')(sequelize, Sequelize);
 db.pagos = require('../pagos/model/pagos')(sequelize,Sequelize);
 db.turnos = require('../turnos/model/turnos')(sequelize,Sequelize);
+db.usuario = require('../usuario/model/usuarios')(sequelize,Sequelize);
 
 
 
 
 
-db.sequelize.sync({force:false}).then(() =>  {
-});
+db.sequelize.sync({force:false}).then(() =>  {});
 
 module.exports =  db;
 
