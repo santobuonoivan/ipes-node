@@ -39,6 +39,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'detalle'
 		}
 	}, {
-		tableName: 'salidas'
+		tableName: 'salidas',
+		timestamps:false
 	});
 };

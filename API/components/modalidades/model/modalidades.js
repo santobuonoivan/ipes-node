@@ -25,6 +25,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'v'
 		}
 	}, {
-		tableName: 'modalidades'
+		tableName: 'modalidades',
+		timestamps:false
 	});
 };

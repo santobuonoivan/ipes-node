@@ -39,6 +39,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'pasada'
 		}
 	}, {
-		tableName: 'pagos'
+		tableName: 'pagos',
+		timestamps:false
 	});
 };

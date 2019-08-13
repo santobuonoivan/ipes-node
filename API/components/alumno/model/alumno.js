@@ -133,6 +133,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'promo'
 		}
 	}, {
-		tableName: 'alumnos'
+		tableName: 'alumnos',
+		timestamps:false
 	});
 };

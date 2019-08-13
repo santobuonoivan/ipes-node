@@ -45,6 +45,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'escertificacion'
 		}
 	}, {
-		tableName: 'documentacion'
+		tableName: 'documentacion',
+		timestamps:false
 	});
 };

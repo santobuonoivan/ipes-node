@@ -50,6 +50,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'id_fin_salida'
 		}
 	}, {
-		tableName: 'caja'
+		tableName: 'caja',
+		timestamps:false
 	});
 };

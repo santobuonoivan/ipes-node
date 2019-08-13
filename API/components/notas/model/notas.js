@@ -5,6 +5,8 @@ module.exports = function(sequelize, DataTypes) {
 		id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
+			primaryKey: true,
+			autoIncrement: true,
 			field: 'id'
 		},
 		idAlumno: {
@@ -36,6 +38,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'fecha'
 		}
 	}, {
-		tableName: 'notas'
+		tableName: 'notas',
+		timestamps:false
 	});
 };

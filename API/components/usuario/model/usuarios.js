@@ -90,6 +90,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'codigopostal'
 		}
 	}, {
-		tableName: 'usuarios'
+		tableName: 'usuarios',
+		timestamps:false
 	});
 };

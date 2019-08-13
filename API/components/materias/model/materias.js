@@ -24,6 +24,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'nombre'
 		}
 	}, {
-		tableName: 'materias'
+		tableName: 'materias',
+		timestamps:false
 	});
 };

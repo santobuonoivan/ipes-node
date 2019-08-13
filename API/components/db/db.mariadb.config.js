@@ -23,8 +23,11 @@ db.modalidades = require('../modalidades/model/modalidades')(sequelize,Sequelize
 db.notas = require('../notas/model/notas')(sequelize, Sequelize);
 db.pagos = require('../pagos/model/pagos')(sequelize,Sequelize);
 db.turnos = require('../turnos/model/turnos')(sequelize,Sequelize);
-db.usuario = require('../usuario/model/usuarios')(sequelize,Sequelize);
+//db.usuario = require('../usuario/model/usuarios')(sequelize,Sequelize);
 
+/* es necesario desde el mas particular al general entonces se necesita hacer belongsto antes de un hasmany */
+db.entrada.belongsTo(db.caja, {as: 'caja', foreignKey:'entradas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
+db.caja.hasMany(db.entrada, {as: 'entradas', foreignKey:'entradas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
 
 
 
