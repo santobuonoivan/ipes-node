@@ -6,75 +6,90 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true
+			autoIncrement: true,
+			field: 'id'
 		},
 		apellido: {
 			type: DataTypes.STRING(50),
-			allowNull: false
+			allowNull: false,
+			field: 'apellido'
 		},
 		nombre: {
 			type: DataTypes.STRING(50),
-			allowNull: false
+			allowNull: false,
+			field: 'nombre'
 		},
 		dni: {
 			type: DataTypes.INTEGER(9),
-			allowNull: false
+			allowNull: false,
+			field: 'dni'
 		},
 		clave: {
 			type: DataTypes.STRING(20),
-			allowNull: false
+			allowNull: false,
+			field: 'clave'
 		},
 		usuario: {
 			type: DataTypes.STRING(20),
-			allowNull: false
+			allowNull: false,
+			field: 'usuario'
 		},
 		fechadecumpleanios: {
 			type: DataTypes.DATEONLY,
-			allowNull: false
+			allowNull: false,
+			field: 'fechadecumpleanios'
 		},
 		email: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: false,
+			field: 'email'
 		},
 		perfil: {
 			type: DataTypes.STRING(15),
-			allowNull: false
+			allowNull: false,
+			field: 'perfil'
 		},
 		turno: {
 			type: DataTypes.STRING(15),
-			allowNull: false
+			allowNull: false,
+			field: 'turno'
 		},
 		tel: {
 			type: DataTypes.STRING(20),
-			allowNull: false
+			allowNull: false,
+			field: 'tel'
 		},
 		celular: {
 			type: DataTypes.STRING(20),
-			allowNull: false
+			allowNull: false,
+			field: 'celular'
 		},
 		direccion1: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: false,
+			field: 'direccion1'
 		},
 		direccion2: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: false,
+			field: 'direccion2'
 		},
 		provincia: {
 			type: DataTypes.STRING(20),
-			allowNull: false
+			allowNull: false,
+			field: 'provincia'
 		},
 		ciudad: {
 			type: DataTypes.STRING(20),
-			allowNull: false
+			allowNull: false,
+			field: 'ciudad'
 		},
 		codigopostal: {
 			type: DataTypes.STRING(10),
-			allowNull: false
+			allowNull: false,
+			field: 'codigopostal'
 		}
 	}, {
-		tableName: 'usuarios',
-		timestamps:false
-
+		tableName: 'usuarios'
 	});
 };

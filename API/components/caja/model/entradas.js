@@ -2,35 +2,43 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('entradas', {
-		id_entrada: {
-			type: DataTypes.INTEGER(11),
+		idEntrada: {
+			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true
+			autoIncrement: true,
+			field: 'id_entrada'
 		},
-		usuario_id: {
-			type: DataTypes.INTEGER(11),
-			allowNull: false
+		usuarioId: {
+			type: DataTypes.INTEGER(9).UNSIGNED,
+			allowNull: false,
+			field: 'usuario_id'
 		},
-		id_caja: {
-			type: DataTypes.INTEGER(11),
-			allowNull: false
+		idCaja: {
+			type: DataTypes.INTEGER(9).UNSIGNED,
+			allowNull: false,
+			references: {
+				model: 'caja',
+				key: 'id_caja'
+			},
+			field: 'id_caja'
 		},
 		importe: {
 			type: DataTypes.DECIMAL,
-			allowNull: false
+			allowNull: false,
+			field: 'importe'
 		},
 		fechayhora: {
 			type: DataTypes.DATE,
-			allowNull: false
+			allowNull: false,
+			field: 'fechayhora'
 		},
 		detalle: {
 			type: DataTypes.STRING(250),
-			allowNull: false
+			allowNull: false,
+			field: 'detalle'
 		}
 	}, {
-		tableName: 'entradas',
-		timestamps:false
-
+		tableName: 'entradas'
 	});
 };

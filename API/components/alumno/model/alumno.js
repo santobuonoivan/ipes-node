@@ -3,105 +3,136 @@
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('alumnos', {
 		id: {
-			type: DataTypes.INTEGER(11),
+			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true
+			autoIncrement: true,
+			field: 'id'
 		},
 		dni: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: false
+			allowNull: false,
+			field: 'dni'
 		},
 		nombre: {
 			type: DataTypes.STRING(50),
-			allowNull: false
+			allowNull: false,
+			field: 'nombre'
 		},
 		apellido: {
 			type: DataTypes.STRING(50),
-			allowNull: false
+			allowNull: false,
+			field: 'apellido'
 		},
 		sexo: {
 			type: DataTypes.STRING(5),
-			allowNull: false
+			allowNull: false,
+			field: 'sexo'
 		},
 		legajo: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false
+			allowNull: false,
+			field: 'legajo'
 		},
-		idcarrera: {
-			type: DataTypes.INTEGER(11),
-			allowNull: false
+		idCarrera: {
+			type: DataTypes.INTEGER(9).UNSIGNED,
+			allowNull: true,
+			references: {
+				model: 'carreras',
+				key: 'id'
+			},
+			field: 'id_carrera'
 		},
 		fechadeinscripcion: {
 			type: DataTypes.DATEONLY,
-			allowNull: false
+			allowNull: false,
+			field: 'fechadeinscripcion'
 		},
 		modalidad: {
 			type: DataTypes.STRING(5),
-			allowNull: false
+			allowNull: false,
+			field: 'modalidad'
 		},
 		turno: {
 			type: DataTypes.STRING(5),
-			allowNull: false
+			allowNull: false,
+			field: 'turno'
 		},
-		anio_carrera: {
+		anioCarrera: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false
+			allowNull: false,
+			field: 'anio_carrera'
 		},
 		activo: {
 			type: DataTypes.INTEGER(1),
-			allowNull: false
+			allowNull: false,
+			field: 'activo'
 		},
 		fechadenacimiento: {
 			type: DataTypes.DATEONLY,
-			allowNull: false
+			allowNull: false,
+			field: 'fechadenacimiento'
 		},
 		direccion: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: false,
+			field: 'direccion'
 		},
 		tel: {
 			type: DataTypes.STRING(25),
-			allowNull: false
+			allowNull: true,
+			field: 'tel'
 		},
 		celular: {
 			type: DataTypes.STRING(25),
-			allowNull: false
+			allowNull: true,
+			field: 'celular'
 		},
 		estadocivil: {
 			type: DataTypes.STRING(30),
-			allowNull: false
+			allowNull: true,
+			field: 'estadocivil'
 		},
 		secundario: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: false,
+			field: 'secundario'
 		},
 		email: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: false,
+			field: 'email'
 		},
 		facebook: {
 			type: DataTypes.STRING(50),
-			allowNull: false
+			allowNull: true,
+			field: 'facebook'
 		},
 		trabajo: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: true,
+			field: 'trabajo'
 		},
-		id_documentacion: {
-			type: DataTypes.INTEGER(11),
-			allowNull: false
+		idDocumentacion: {
+			type: DataTypes.INTEGER(9).UNSIGNED,
+			allowNull: true,
+			references: {
+				model: 'documentacion',
+				key: 'id'
+			},
+			field: 'id_documentacion'
 		},
 		conocio: {
 			type: DataTypes.STRING(250),
-			allowNull: false
+			allowNull: false,
+			field: 'conocio'
 		},
 		promo: {
 			type: DataTypes.STRING(250),
-			allowNull: false
+			allowNull: false,
+			field: 'promo'
 		}
 	}, {
-		tableName: 'alumnos',
-		timestamps:false
+		tableName: 'alumnos'
 	});
 };
