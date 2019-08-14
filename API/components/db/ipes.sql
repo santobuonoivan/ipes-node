@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-08-2019 a las 21:34:58
+-- Tiempo de generación: 14-08-2019 a las 23:12:04
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -32,7 +32,7 @@ USE `ipes`;
 
 DROP TABLE IF EXISTS `alumnos`;
 CREATE TABLE `alumnos` (
-  `id` int(9) UNSIGNED NOT NULL,
+  `alumno_id` int(9) UNSIGNED NOT NULL,
   `dni` int(9) UNSIGNED NOT NULL,
   `nombre` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `apellido` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
@@ -58,13 +58,17 @@ CREATE TABLE `alumnos` (
   `promo` varchar(250) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+-- --------------------------------------------------------
+
 --
--- RELACIONES PARA LA TABLA `alumnos`:
---   `id_carrera`
---       `carreras` -> `id`
---   `id_documentacion`
---       `documentacion` -> `id`
+-- Estructura de tabla para la tabla `alumnos_x_carreras`
 --
+
+DROP TABLE IF EXISTS `alumnos_x_carreras`;
+CREATE TABLE `alumnos_x_carreras` (
+  `alumno_id` int(9) UNSIGNED NOT NULL,
+  `carrera_id` int(9) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -85,10 +89,6 @@ CREATE TABLE `caja` (
   `id_fin_salida` int(9) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
---
--- RELACIONES PARA LA TABLA `caja`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -97,20 +97,12 @@ CREATE TABLE `caja` (
 
 DROP TABLE IF EXISTS `carreras`;
 CREATE TABLE `carreras` (
-  `id` int(9) UNSIGNED NOT NULL,
+  `carrera_id` int(9) UNSIGNED NOT NULL,
   `nombre` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
-  `modalidades` int(9) UNSIGNED NOT NULL,
-  `turnos` int(9) UNSIGNED NOT NULL,
+  `mod_id` int(9) UNSIGNED NOT NULL,
+  `turno_id` int(9) UNSIGNED NOT NULL,
   `cantidadanios` varchar(250) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
---
--- RELACIONES PARA LA TABLA `carreras`:
---   `modalidades`
---       `modalidades` -> `id`
---   `turnos`
---       `turnos` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -127,12 +119,6 @@ CREATE TABLE `cuotas` (
   `importe` int(11) NOT NULL,
   `pasada` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
---
--- RELACIONES PARA LA TABLA `cuotas`:
---   `id_alumno`
---       `alumnos` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -152,10 +138,6 @@ CREATE TABLE `documentacion` (
   `escertificacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
---
--- RELACIONES PARA LA TABLA `documentacion`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -172,12 +154,6 @@ CREATE TABLE `entradas` (
   `detalle` varchar(250) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
---
--- RELACIONES PARA LA TABLA `entradas`:
---   `id_caja`
---       `caja` -> `id_caja`
---
-
 -- --------------------------------------------------------
 
 --
@@ -186,16 +162,39 @@ CREATE TABLE `entradas` (
 
 DROP TABLE IF EXISTS `materias`;
 CREATE TABLE `materias` (
-  `id` int(9) UNSIGNED NOT NULL,
+  `materia_id` int(9) UNSIGNED NOT NULL,
   `id_carrera` int(9) UNSIGNED NOT NULL,
-  `nombre` varchar(70) COLLATE latin1_spanish_ci NOT NULL
+  `nombre` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
+  `id_alumno` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+-- --------------------------------------------------------
+
 --
--- RELACIONES PARA LA TABLA `materias`:
---   `id_carrera`
---       `carreras` -> `id`
+-- Estructura de tabla para la tabla `materias_x_alumno_x_carrera`
 --
+
+DROP TABLE IF EXISTS `materias_x_alumno_x_carrera`;
+CREATE TABLE `materias_x_alumno_x_carrera` (
+  `alumno_id` int(9) UNSIGNED NOT NULL,
+  `materia_id` int(9) UNSIGNED NOT NULL,
+  `carrera_id` int(9) UNSIGNED NOT NULL,
+  `periodo_id` int(9) UNSIGNED NOT NULL,
+  `nota` int(4) UNSIGNED NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `materias_x_carreras`
+--
+
+DROP TABLE IF EXISTS `materias_x_carreras`;
+CREATE TABLE `materias_x_carreras` (
+  `carrera_id` int(9) UNSIGNED NOT NULL,
+  `materia_id` int(9) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -205,38 +204,11 @@ CREATE TABLE `materias` (
 
 DROP TABLE IF EXISTS `modalidades`;
 CREATE TABLE `modalidades` (
-  `id` int(9) UNSIGNED NOT NULL,
+  `mod_id` int(9) UNSIGNED NOT NULL,
   `p` int(11) NOT NULL,
   `sp` int(11) NOT NULL,
   `v` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
---
--- RELACIONES PARA LA TABLA `modalidades`:
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `notas`
---
-
-DROP TABLE IF EXISTS `notas`;
-CREATE TABLE `notas` (
-  `id` int(9) UNSIGNED NOT NULL,
-  `id_alumno` int(9) UNSIGNED NOT NULL,
-  `id_materia` int(9) UNSIGNED NOT NULL,
-  `nota` int(11) NOT NULL,
-  `fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
---
--- RELACIONES PARA LA TABLA `notas`:
---   `id_alumno`
---       `alumnos` -> `id`
---   `id_materia`
---       `materias` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -254,11 +226,17 @@ CREATE TABLE `pagos` (
   `pasada` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+-- --------------------------------------------------------
+
 --
--- RELACIONES PARA LA TABLA `pagos`:
---   `id_alumno`
---       `alumnos` -> `id`
+-- Estructura de tabla para la tabla `periodo`
 --
+
+DROP TABLE IF EXISTS `periodo`;
+CREATE TABLE `periodo` (
+  `periodo_id` int(9) UNSIGNED NOT NULL,
+  `periodo_type` varchar(100) COLLATE latin1_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -276,12 +254,6 @@ CREATE TABLE `salidas` (
   `detalle` varchar(250) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
---
--- RELACIONES PARA LA TABLA `salidas`:
---   `id_caja`
---       `caja` -> `id_caja`
---
-
 -- --------------------------------------------------------
 
 --
@@ -290,15 +262,11 @@ CREATE TABLE `salidas` (
 
 DROP TABLE IF EXISTS `turnos`;
 CREATE TABLE `turnos` (
-  `id` int(9) UNSIGNED NOT NULL,
+  `turno_id` int(9) UNSIGNED NOT NULL,
   `m` int(11) NOT NULL,
   `t` int(11) NOT NULL,
   `n` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
---
--- RELACIONES PARA LA TABLA `turnos`:
---
 
 -- --------------------------------------------------------
 
@@ -308,7 +276,7 @@ CREATE TABLE `turnos` (
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+  `usuario_id` int(9) UNSIGNED NOT NULL,
   `apellido` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `nombre` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `dni` int(9) NOT NULL,
@@ -328,10 +296,6 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
--- RELACIONES PARA LA TABLA `usuarios`:
---
-
---
 -- Índices para tablas volcadas
 --
 
@@ -339,23 +303,31 @@ CREATE TABLE `usuarios` (
 -- Indices de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`alumno_id`),
   ADD KEY `alumnos_documentacion_FK` (`id_documentacion`),
   ADD KEY `alumnos_carreras_FK` (`id_carrera`);
+
+--
+-- Indices de la tabla `alumnos_x_carreras`
+--
+ALTER TABLE `alumnos_x_carreras`
+  ADD PRIMARY KEY (`alumno_id`,`carrera_id`),
+  ADD KEY `alumnos_x_carreras_to_carreras_FK` (`carrera_id`);
 
 --
 -- Indices de la tabla `caja`
 --
 ALTER TABLE `caja`
-  ADD PRIMARY KEY (`id_caja`);
+  ADD PRIMARY KEY (`id_caja`,`usuario_id`),
+  ADD KEY `caja_FK` (`usuario_id`);
 
 --
 -- Indices de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `carreras_modalidades_FK` (`modalidades`),
-  ADD KEY `carreras_turnos_FK` (`turnos`);
+  ADD PRIMARY KEY (`carrera_id`),
+  ADD KEY `carreras_modalidades_FK` (`mod_id`),
+  ADD KEY `carreras_turnos_FK` (`turno_id`);
 
 --
 -- Indices de la tabla `cuotas`
@@ -374,28 +346,36 @@ ALTER TABLE `documentacion`
 -- Indices de la tabla `entradas`
 --
 ALTER TABLE `entradas`
-  ADD PRIMARY KEY (`id_entrada`),
-  ADD KEY `entradas_FK` (`id_caja`);
+  ADD PRIMARY KEY (`id_entrada`,`usuario_id`,`id_caja`),
+  ADD KEY `entradas_to_caja_FK` (`id_caja`,`usuario_id`);
 
 --
 -- Indices de la tabla `materias`
 --
 ALTER TABLE `materias`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`materia_id`),
   ADD KEY `materias_carrera_FK` (`id_carrera`);
+
+--
+-- Indices de la tabla `materias_x_alumno_x_carrera`
+--
+ALTER TABLE `materias_x_alumno_x_carrera`
+  ADD PRIMARY KEY (`alumno_id`,`materia_id`,`carrera_id`,`periodo_id`),
+  ADD KEY `materias_x_alumno_x_carrera_to_mat_to_carrera_FK` (`carrera_id`,`materia_id`),
+  ADD KEY `materias_x_alumno_x_carrera_to_periodo_FK` (`periodo_id`);
+
+--
+-- Indices de la tabla `materias_x_carreras`
+--
+ALTER TABLE `materias_x_carreras`
+  ADD PRIMARY KEY (`carrera_id`,`materia_id`),
+  ADD KEY `materias_x_carreras_to_materia_FK` (`materia_id`);
 
 --
 -- Indices de la tabla `modalidades`
 --
 ALTER TABLE `modalidades`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `notas`
---
-ALTER TABLE `notas`
-  ADD KEY `notas_alumno_FK` (`id_alumno`),
-  ADD KEY `notas_materia_FK` (`id_materia`);
+  ADD PRIMARY KEY (`mod_id`);
 
 --
 -- Indices de la tabla `pagos`
@@ -405,23 +385,29 @@ ALTER TABLE `pagos`
   ADD KEY `pagos_alumno_FK` (`id_alumno`);
 
 --
+-- Indices de la tabla `periodo`
+--
+ALTER TABLE `periodo`
+  ADD PRIMARY KEY (`periodo_id`);
+
+--
 -- Indices de la tabla `salidas`
 --
 ALTER TABLE `salidas`
-  ADD PRIMARY KEY (`id_salida`),
-  ADD KEY `salidas_FK` (`id_caja`);
+  ADD PRIMARY KEY (`id_salida`,`usuario_id`,`id_caja`),
+  ADD KEY `salidas_FK` (`id_caja`,`usuario_id`);
 
 --
 -- Indices de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`turno_id`);
 
 --
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`usuario_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -431,19 +417,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `caja`
---
-ALTER TABLE `caja`
-  MODIFY `id_caja` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `alumno_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `carrera_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cuotas`
@@ -458,22 +438,16 @@ ALTER TABLE `documentacion`
   MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `entradas`
---
-ALTER TABLE `entradas`
-  MODIFY `id_entrada` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `materia_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `modalidades`
 --
 ALTER TABLE `modalidades`
-  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `mod_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
@@ -482,22 +456,22 @@ ALTER TABLE `pagos`
   MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `salidas`
+-- AUTO_INCREMENT de la tabla `periodo`
 --
-ALTER TABLE `salidas`
-  MODIFY `id_salida` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `periodo`
+  MODIFY `periodo_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `turno_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `usuario_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -507,52 +481,66 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  ADD CONSTRAINT `alumnos_carreras_FK` FOREIGN KEY (`id_carrera`) REFERENCES `carreras` (`id`),
   ADD CONSTRAINT `alumnos_documentacion_FK` FOREIGN KEY (`id_documentacion`) REFERENCES `documentacion` (`id`);
+
+--
+-- Filtros para la tabla `alumnos_x_carreras`
+--
+ALTER TABLE `alumnos_x_carreras`
+  ADD CONSTRAINT `alumnos_x_carreras_to_alumnos_FK` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`alumno_id`),
+  ADD CONSTRAINT `alumnos_x_carreras_to_carreras_FK` FOREIGN KEY (`carrera_id`) REFERENCES `carreras` (`carrera_id`);
+
+--
+-- Filtros para la tabla `caja`
+--
+ALTER TABLE `caja`
+  ADD CONSTRAINT `caja_FK` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`);
 
 --
 -- Filtros para la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  ADD CONSTRAINT `carreras_modalidades_FK` FOREIGN KEY (`modalidades`) REFERENCES `modalidades` (`id`),
-  ADD CONSTRAINT `carreras_turnos_FK` FOREIGN KEY (`turnos`) REFERENCES `turnos` (`id`);
+  ADD CONSTRAINT `carreras_modalidades_FK` FOREIGN KEY (`mod_id`) REFERENCES `modalidades` (`mod_id`),
+  ADD CONSTRAINT `carreras_turnos_FK` FOREIGN KEY (`turno_id`) REFERENCES `turnos` (`turno_id`);
 
 --
 -- Filtros para la tabla `cuotas`
 --
 ALTER TABLE `cuotas`
-  ADD CONSTRAINT `cuotas_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`);
+  ADD CONSTRAINT `cuotas_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`alumno_id`);
 
 --
 -- Filtros para la tabla `entradas`
 --
 ALTER TABLE `entradas`
-  ADD CONSTRAINT `entradas_FK` FOREIGN KEY (`id_caja`) REFERENCES `caja` (`id_caja`);
+  ADD CONSTRAINT `entradas_to_caja_FK` FOREIGN KEY (`id_caja`,`usuario_id`) REFERENCES `caja` (`id_caja`, `usuario_id`);
 
 --
--- Filtros para la tabla `materias`
+-- Filtros para la tabla `materias_x_alumno_x_carrera`
 --
-ALTER TABLE `materias`
-  ADD CONSTRAINT `materias_carrera_FK` FOREIGN KEY (`id_carrera`) REFERENCES `carreras` (`id`);
+ALTER TABLE `materias_x_alumno_x_carrera`
+  ADD CONSTRAINT `materias_x_alumno_x_carrera_to_alumnoFK` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`alumno_id`),
+  ADD CONSTRAINT `materias_x_alumno_x_carrera_to_mat_to_carrera_FK` FOREIGN KEY (`carrera_id`,`materia_id`) REFERENCES `materias_x_carreras` (`carrera_id`, `materia_id`),
+  ADD CONSTRAINT `materias_x_alumno_x_carrera_to_periodo_FK` FOREIGN KEY (`periodo_id`) REFERENCES `periodo` (`periodo_id`);
 
 --
--- Filtros para la tabla `notas`
+-- Filtros para la tabla `materias_x_carreras`
 --
-ALTER TABLE `notas`
-  ADD CONSTRAINT `notas_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`),
-  ADD CONSTRAINT `notas_materia_FK` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id`);
+ALTER TABLE `materias_x_carreras`
+  ADD CONSTRAINT `materias_x_carreras_to_carrera_FK` FOREIGN KEY (`carrera_id`) REFERENCES `carreras` (`carrera_id`),
+  ADD CONSTRAINT `materias_x_carreras_to_materia_FK` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`materia_id`);
 
 --
 -- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  ADD CONSTRAINT `pagos_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id`);
+  ADD CONSTRAINT `pagos_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`alumno_id`);
 
 --
 -- Filtros para la tabla `salidas`
 --
 ALTER TABLE `salidas`
-  ADD CONSTRAINT `salidas_FK` FOREIGN KEY (`id_caja`) REFERENCES `caja` (`id_caja`);
+  ADD CONSTRAINT `salidas_FK` FOREIGN KEY (`id_caja`,`usuario_id`) REFERENCES `caja` (`id_caja`, `usuario_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
