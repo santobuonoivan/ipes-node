@@ -6,46 +6,37 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true,
-			field: 'id'
+			autoIncrement: true
 		},
 		titulo: {
 			type: DataTypes.INTEGER(1),
-			allowNull: true,
-			field: 'titulo'
+			allowNull: true
 		},
 		dni: {
 			type: DataTypes.INTEGER(1),
-			allowNull: true,
-			field: 'dni'
+			allowNull: true
 		},
 		fotos: {
 			type: DataTypes.INTEGER(1),
-			allowNull: true,
-			field: 'fotos'
+			allowNull: true
 		},
-		certSalud: {
+		cert_salud: {
 			type: DataTypes.INTEGER(1),
-			allowNull: true,
-			field: 'cert_salud'
+			allowNull: true
 		},
 		esmatricula: {
 			type: DataTypes.INTEGER(11),
-			allowNull: true,
-			field: 'esmatricula'
+			allowNull: true
 		},
 		escuota: {
 			type: DataTypes.INTEGER(11),
-			allowNull: true,
-			field: 'escuota'
+			allowNull: true
 		},
 		escertificacion: {
 			type: DataTypes.INTEGER(11),
-			allowNull: true,
-			field: 'escertificacion'
+			allowNull: true
 		}
 	}, {
-		tableName: 'documentacion',
-		timestamps:false
+		tableName: 'documentacion'
 	});
 };

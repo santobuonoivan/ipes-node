@@ -6,26 +6,21 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true,
-			field: 'id'
+			autoIncrement: true
 		},
 		m: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			field: 'm'
+			allowNull: false
 		},
 		t: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			field: 't'
+			allowNull: false
 		},
 		n: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			field: 'n'
+			allowNull: false
 		}
 	}, {
-		tableName: 'turnos',
-		timestamps:false
+		tableName: 'turnos'
 	});
 };

@@ -2,55 +2,45 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('caja', {
-		idCaja: {
+		id_caja: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true,
-			field: 'id_caja'
+			autoIncrement: true
 		},
-		usuarioId: {
+		usuario_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: false,
-			field: 'usuario_id'
+			allowNull: false
 		},
 		importe: {
 			type: DataTypes.DECIMAL,
-			allowNull: false,
-			field: 'importe'
+			allowNull: false
 		},
 		fechayhora: {
 			type: DataTypes.DATE,
-			allowNull: false,
-			field: 'fechayhora'
+			allowNull: false
 		},
 		detalle: {
 			type: DataTypes.STRING(250),
-			allowNull: false,
-			field: 'detalle'
+			allowNull: false
 		},
-		idComienzoEntrada: {
+		id_comienzo_entrada: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: true,
-			field: 'id_comienzo_entrada'
+			allowNull: true
 		},
-		idFinEntrada: {
+		id_fin_entrada: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: true,
-			field: 'id_fin_entrada'
+			allowNull: true
 		},
-		idComienzoSalida: {
+		id_comienzo_salida: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: true,
-			field: 'id_comienzo_salida'
+			allowNull: true
 		},
-		idFinSalida: {
+		id_fin_salida: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: true,
-			field: 'id_fin_salida'
+			allowNull: true
 		}
 	}, {
-		tableName: 'caja',
-		timestamps:false
+		tableName: 'caja'
 	});
 };

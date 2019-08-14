@@ -6,91 +6,73 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true,
-			field: 'id'
+			autoIncrement: true
 		},
 		apellido: {
 			type: DataTypes.STRING(50),
-			allowNull: false,
-			field: 'apellido'
+			allowNull: false
 		},
 		nombre: {
 			type: DataTypes.STRING(50),
-			allowNull: false,
-			field: 'nombre'
+			allowNull: false
 		},
 		dni: {
 			type: DataTypes.INTEGER(9),
-			allowNull: false,
-			field: 'dni'
+			allowNull: false
 		},
 		clave: {
 			type: DataTypes.STRING(20),
-			allowNull: false,
-			field: 'clave'
+			allowNull: false
 		},
 		usuario: {
 			type: DataTypes.STRING(20),
-			allowNull: false,
-			field: 'usuario'
+			allowNull: false
 		},
 		fechadecumpleanios: {
 			type: DataTypes.DATEONLY,
-			allowNull: false,
-			field: 'fechadecumpleanios'
+			allowNull: false
 		},
 		email: {
 			type: DataTypes.STRING(70),
-			allowNull: false,
-			field: 'email'
+			allowNull: false
 		},
 		perfil: {
 			type: DataTypes.STRING(15),
-			allowNull: false,
-			field: 'perfil'
+			allowNull: false
 		},
 		turno: {
 			type: DataTypes.STRING(15),
-			allowNull: false,
-			field: 'turno'
+			allowNull: false
 		},
 		tel: {
 			type: DataTypes.STRING(20),
-			allowNull: false,
-			field: 'tel'
+			allowNull: false
 		},
 		celular: {
 			type: DataTypes.STRING(20),
-			allowNull: false,
-			field: 'celular'
+			allowNull: false
 		},
 		direccion1: {
 			type: DataTypes.STRING(70),
-			allowNull: false,
-			field: 'direccion1'
+			allowNull: false
 		},
 		direccion2: {
 			type: DataTypes.STRING(70),
-			allowNull: false,
-			field: 'direccion2'
+			allowNull: false
 		},
 		provincia: {
 			type: DataTypes.STRING(20),
-			allowNull: false,
-			field: 'provincia'
+			allowNull: false
 		},
 		ciudad: {
 			type: DataTypes.STRING(20),
-			allowNull: false,
-			field: 'ciudad'
+			allowNull: false
 		},
 		codigopostal: {
 			type: DataTypes.STRING(10),
-			allowNull: false,
-			field: 'codigopostal'
+			allowNull: false
 		}
 	}, {
-		tableName: 'usuarios',
-		timestamps:false
+		tableName: 'usuarios'
 	});
 };

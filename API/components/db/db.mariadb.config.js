@@ -26,8 +26,28 @@ db.turnos = require('../turnos/model/turnos')(sequelize,Sequelize);
 //db.usuario = require('../usuario/model/usuarios')(sequelize,Sequelize);
 
 /* es necesario desde el mas particular al general entonces se necesita hacer belongsto antes de un hasmany */
+// Caja
 db.entrada.belongsTo(db.caja, {as: 'caja', foreignKey:'entradas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
 db.caja.hasMany(db.entrada, {as: 'entradas', foreignKey:'entradas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
+db.salida.belongsTo(db.caja, {as: 'caja', foreignKey:'salidas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
+db.caja.hasMany(db.salida, {as: 'salidas', foreignKey:'salidas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
+
+// Alumno
+db.cuota.belongsTo(db.alumno, {as: 'alumno', foreignKey:'cuotas_alumno_FK', targetKey:'id', sourceKey:'id_alumno'});
+db.alumno.hasMany(db.cuota, {as: 'cuotas', foreignKey:'cuotas_alumno_FK', targetKey:'id_alumno', sourceKey:'id'});
+
+db.pagos.belongsTo(db.alumno, {as: 'alumno', foreignKey:'pagos_alumno_FK', targetKey:'id', sourceKey:'id_alumno'});
+db.alumno.hasMany(db.pagos, {as: 'pagos', foreignKey:'pagos_alumno_FK', targetKey:'id_alumno', sourceKey:'id'});
+
+db.notas.belongsTo(db.alumno, {as: 'alumno', foreignKey:'notas_alumno_FK', targetKey:'id', sourceKey:'id_alumno'});
+db.alumno.hasMany(db.notas, {as: 'notas', foreignKey:'notas_alumno_FK', targetKey:'id_alumno', sourceKey:'id'});
+
+db.carrera.belongsTo(db.alumno, {as: 'alumno', foreignKey:'alumnos_carreras_FK', targetKey:'id_carrera', sourceKey:'id'});
+db.alumno.hasMany(db.carrera, {as: 'carrera', foreignKey:'alumnos_carreras_FK', targetKey:'id', sourceKey:'id_carrera'});
+
+db.documentacion.belongsTo(db.alumno, {as: 'alumno', foreignKey:'alumnos_documentacion_FK', targetKey:'id_documentacion', sourceKey:'id'});
+db.alumno.belongsTo(db.documentacion, {as: 'documentacion', foreignKey:'alumnos_documentacion_FK', targetKey:'id', sourceKey:'id_documentacion'});
+
 
 
 

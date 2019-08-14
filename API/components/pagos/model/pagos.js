@@ -6,40 +6,33 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true,
-			field: 'id'
+			autoIncrement: true
 		},
-		idAlumno: {
+		id_alumno: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			references: {
 				model: 'alumnos',
 				key: 'id'
-			},
-			field: 'id_alumno'
+			}
 		},
 		concepto: {
 			type: DataTypes.STRING(15),
-			allowNull: false,
-			field: 'concepto'
+			allowNull: false
 		},
 		fecha: {
 			type: DataTypes.DATEONLY,
-			allowNull: false,
-			field: 'fecha'
+			allowNull: false
 		},
 		importe: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			field: 'importe'
+			allowNull: false
 		},
 		pasada: {
 			type: DataTypes.INTEGER(11),
-			allowNull: true,
-			field: 'pasada'
+			allowNull: true
 		}
 	}, {
-		tableName: 'pagos',
-		timestamps:false
+		tableName: 'pagos'
 	});
 };

@@ -6,26 +6,21 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
-			autoIncrement: true,
-			field: 'id'
+			autoIncrement: true
 		},
 		p: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			field: 'p'
+			allowNull: false
 		},
 		sp: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			field: 'sp'
+			allowNull: false
 		},
 		v: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			field: 'v'
+			allowNull: false
 		}
 	}, {
-		tableName: 'modalidades',
-		timestamps:false
+		tableName: 'modalidades'
 	});
 };
