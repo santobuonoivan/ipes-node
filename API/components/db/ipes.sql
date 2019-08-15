@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-08-2019 a las 23:12:04
+-- Tiempo de generación: 15-08-2019 a las 23:25:52
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -241,6 +241,58 @@ CREATE TABLE `periodo` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `permissions`
+--
+
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+  `permission_id` int(9) UNSIGNED NOT NULL,
+  `title` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `module` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `action` varchar(50) COLLATE latin1_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permission_role`
+--
+
+DROP TABLE IF EXISTS `permission_role`;
+CREATE TABLE `permission_role` (
+  `permission_id` int(9) UNSIGNED NOT NULL,
+  `role_id` int(9) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permission_user`
+--
+
+DROP TABLE IF EXISTS `permission_user`;
+CREATE TABLE `permission_user` (
+  `usuario_id` int(9) UNSIGNED NOT NULL,
+  `permission_id` int(9) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE `roles` (
+  `role_id` int(9) UNSIGNED NOT NULL,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `parent` int(9) UNSIGNED DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `salidas`
 --
 
@@ -266,6 +318,18 @@ CREATE TABLE `turnos` (
   `m` int(11) NOT NULL,
   `t` int(11) NOT NULL,
   `n` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_roles`
+--
+
+DROP TABLE IF EXISTS `user_roles`;
+CREATE TABLE `user_roles` (
+  `usuario_id` int(9) UNSIGNED NOT NULL,
+  `role_id` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -391,6 +455,34 @@ ALTER TABLE `periodo`
   ADD PRIMARY KEY (`periodo_id`);
 
 --
+-- Indices de la tabla `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`permission_id`);
+
+--
+-- Indices de la tabla `permission_role`
+--
+ALTER TABLE `permission_role`
+  ADD PRIMARY KEY (`permission_id`),
+  ADD UNIQUE KEY `permission_role_permission_id_role_id_key` (`permission_id`,`role_id`),
+  ADD KEY `permission_role_role_id_fkey` (`role_id`);
+
+--
+-- Indices de la tabla `permission_user`
+--
+ALTER TABLE `permission_user`
+  ADD PRIMARY KEY (`usuario_id`,`permission_id`),
+  ADD KEY `permission_user_permission_id_fkey` (`permission_id`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`role_id`),
+  ADD KEY `roles_parent_fkey` (`parent`);
+
+--
 -- Indices de la tabla `salidas`
 --
 ALTER TABLE `salidas`
@@ -402,6 +494,13 @@ ALTER TABLE `salidas`
 --
 ALTER TABLE `turnos`
   ADD PRIMARY KEY (`turno_id`);
+
+--
+-- Indices de la tabla `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD PRIMARY KEY (`usuario_id`,`role_id`),
+  ADD KEY `user_roles_role_id_fkey` (`role_id`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -460,6 +559,18 @@ ALTER TABLE `pagos`
 --
 ALTER TABLE `periodo`
   MODIFY `periodo_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `permission_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `role_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `turnos`
@@ -537,10 +648,37 @@ ALTER TABLE `pagos`
   ADD CONSTRAINT `pagos_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`alumno_id`);
 
 --
+-- Filtros para la tabla `permission_role`
+--
+ALTER TABLE `permission_role`
+  ADD CONSTRAINT `permission_role_permission_id_fkey` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `permission_role_role_id_fkey` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `permission_user`
+--
+ALTER TABLE `permission_user`
+  ADD CONSTRAINT `permission_user_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`),
+  ADD CONSTRAINT `permission_user_permission_id_fkey` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD CONSTRAINT `roles_parent_fkey` FOREIGN KEY (`parent`) REFERENCES `roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `salidas`
 --
 ALTER TABLE `salidas`
   ADD CONSTRAINT `salidas_FK` FOREIGN KEY (`id_caja`,`usuario_id`) REFERENCES `caja` (`id_caja`, `usuario_id`);
+
+--
+-- Filtros para la tabla `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD CONSTRAINT `user_roles_role_id_fkey` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_roles_user_id_fkey` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
