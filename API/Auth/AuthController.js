@@ -11,7 +11,7 @@ exports.authenticate = async function (req, res, next) {
     if(error) return res.status(400).json({'error':error.details[0].message});
     let user = await users.findOne({where:{email:req.body.email}});
     if(!user) return res.status(400).json({'error':'Invalid email or password'});
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    const validPassword = await bcrypt.compare(req.body.clave, user.clave);
     if(!validPassword) return res.status(400).json({'error':'Invalid email or password'});
     const token = userService.generateAuthToken(user);
     res.json({'x-auth-token':token});
@@ -21,7 +21,7 @@ exports.authenticate = async function (req, res, next) {
 function validate(req) {
     const schema = {
         email: Joi.string().min(5).max(255).required().email(),
-        password: Joi.string().min(5).max(255).required()
+        clave: Joi.string().min(5).max(255).required()
     };
 
     return Joi.validate(req, schema);

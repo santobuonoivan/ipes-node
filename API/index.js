@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+//const cors = require('./Auth/cors'); TODO modificar cors manual
 const cors = require('cors');
 const env = require('dotenv').config();
 //const authMiddleware = require('./middleware/auth');

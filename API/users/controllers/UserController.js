@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const {Sequelize} = require('sequelize');
 const Op = Sequelize.Op;
 
-/* todo en create usuario inexstente y "email or username alredy exists"
+/* todo en create usuario inexstente y "email or usuario alredy exists"
 
  */
 /* todo poniendo "zipCode" queda null y poniendo "zip_code" dice is not allowed
@@ -18,7 +18,7 @@ exports.all_users = async function (req, res, next) {
     try{
         const userslist = await users.findAll({
             attributes:{
-                exclude:['password']
+                exclude:['clave']
             }
         });
         if(userslist.length > 0)
@@ -37,27 +37,25 @@ exports.insert_user = async function (req, res, next) {
     try{
         user = await users.findAll({
             where:{
-                [Op.or]:[{email:req.body.email}, {username: req.body.username}]
+                [Op.or]:[{email:req.body.email}, {usuario: req.body.usuario}]
             }
         });
     }catch (e) {
         return res.status(400).send({message:'Database connection error: ' + e});
     }
-    if(user.length > 0) return res.status(400).send({message:'email or username already exists'});
+    if(user.length > 0) return res.status(400).send({message:'email or usuario already exists'});
 
     try{
-        user = new users(_.pick(req.body,
-            [
-                'first_name', 'middle_name', 'last_name', 'username',
-                'email', 'password', 'address', 'zipCode', 'phone', 'mobile',
-                'city', 'state', 'country', 'profile_image', 'deleted_at'
-            ]));
+        user = new users(_.pick(req.body, [
+            "nombre", "apellido", "usuario", "dni", "email", "clave", "perfil", "turno", "direccion1",
+            "direccion2", "codigopostal", "tel", "celular", "provincia","ciudad", "country", "is_active",
+            "profile_image", "fechadecumpleanios" ]));
     }catch (e) {
         return res.status(400).send({message:`can't pick user data`});
     }
 
     const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
+    user.clave = await bcrypt.hash(user.clave, salt);
     try{
         await user.save();
     }catch (e) {
@@ -71,17 +69,17 @@ exports.update_user = async function (req, res, next) {
     let result;
     if(error) return res.status(400).send({message: error.details[0].message});
 
-    if( !(await userService.validateUserExist({uid: req.params.uid}))) return res.status(400).send({message: 'User dont found'});
+    if( !(await userService.validateUserExist({id: req.params.id}))) return res.status(400).send({message: 'User dont found'});
 
     if( await userService.validateEmailExist(req.body)) return res.status(400).send({message: 'Email is already used'});
 
 
-    if(req.body.password != '' || req.body.password != null){
+    if(req.body.clave != '' || req.body.clave != null){
         let salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(req.body.password, salt);
+        req.body.clave = await bcrypt.hash(req.body.clave, salt);
     }
     try {
-        result = await users.update(req.body,{where:{uid:req.params.uid}});
+        result = await users.update(req.body,{where:{id:req.params.id}});
         console.log(result);
         return res.json({message:'ok update'});
     }catch (e) {
@@ -91,8 +89,8 @@ exports.update_user = async function (req, res, next) {
 
 exports.delete_user = async function (req, res, next) {
     try {
-        if( !(await userService.validateUserExist({uid: req.params.uid}))) return res.status(404).send({message: 'User dont found'});
-        const result = await users.destroy({where: {uid:req.params.uid}});
+        if( !(await userService.validateUserExist({id: req.params.id}))) return res.status(404).send({message: 'User dont found'});
+        const result = await users.destroy({where: {id:req.params.id}});
         if(result > 0)
             return res.send({message:`${ result } user deleted`});
         else{
@@ -106,7 +104,7 @@ exports.delete_user = async function (req, res, next) {
 
 exports.show_user = async function (req, res, next) {
     try{
-        const result = await users.findOne({where:{uid:req.params.uid}});
+        const result = await users.findOne({where:{id:req.params.id}});
         if(!result) return res.send({message: 'user not found'});
         console.log(result);
         return res.send(result);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-08-2019 a las 23:11:57
+-- Tiempo de generación: 20-08-2019 a las 22:57:49
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -181,6 +181,18 @@ DROP TABLE IF EXISTS `departamentos`;
 CREATE TABLE `departamentos` (
   `depto_id` int(9) UNSIGNED NOT NULL,
   `dpto_name` varchar(100) COLLATE latin1_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dependencies`
+--
+
+DROP TABLE IF EXISTS `dependencies`;
+CREATE TABLE `dependencies` (
+  `materia_id` int(9) UNSIGNED NOT NULL,
+  `dependency` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -425,6 +437,43 @@ CREATE TABLE `turnos` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `usuario_id` int(9) UNSIGNED NOT NULL,
+  `apellido` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `nombre` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `dni` int(9) NOT NULL,
+  `clave` varchar(250) COLLATE latin1_spanish_ci NOT NULL,
+  `usuario` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  `fechadecumpleanios` date NOT NULL,
+  `email` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
+  `perfil` varchar(15) COLLATE latin1_spanish_ci DEFAULT NULL,
+  `turno` varchar(15) COLLATE latin1_spanish_ci DEFAULT NULL,
+  `tel` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `celular` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `direccion1` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
+  `direccion2` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
+  `provincia` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `ciudad` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `codigopostal` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
+  `is_active` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `profile_image` varchar(191) COLLATE latin1_spanish_ci DEFAULT NULL,
+  `country` varchar(150) COLLATE latin1_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`usuario_id`, `apellido`, `nombre`, `dni`, `clave`, `usuario`, `fechadecumpleanios`, `email`, `perfil`, `turno`, `tel`, `celular`, `direccion1`, `direccion2`, `provincia`, `ciudad`, `codigopostal`, `is_active`, `profile_image`, `country`) VALUES
+(1, 'santobuono', 'ivan', 36485205, '$2a$10$d0zxAgzwMy1e5I2jq.8NweaNh.6gDMG1FDzNwzjn5ndSTX.JNJdzG', 'mecalux', '1992-02-19', 'ivan@ivan.com', 'master', NULL, '42503412', '1130881719', 'calle falsa 123 dto 1', 'calle falsa 123 dto 2', 'BS AS', 'quilmes', '1878', 1, NULL, 'argentina');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `user_roles`
 --
 
@@ -432,33 +481,6 @@ DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE `user_roles` (
   `usuario_id` int(9) UNSIGNED NOT NULL,
   `role_id` int(9) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE `usuarios` (
-  `usuario_id` int(9) UNSIGNED NOT NULL,
-  `apellido` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
-  `nombre` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
-  `dni` int(9) NOT NULL,
-  `clave` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `usuario` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `fechadecumpleanios` date NOT NULL,
-  `email` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
-  `perfil` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
-  `turno` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
-  `tel` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `celular` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `direccion1` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
-  `direccion2` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
-  `provincia` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `ciudad` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `codigopostal` varchar(10) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
@@ -533,6 +555,12 @@ ALTER TABLE `cuotas`
 --
 ALTER TABLE `departamentos`
   ADD PRIMARY KEY (`depto_id`);
+
+--
+-- Indices de la tabla `dependencies`
+--
+ALTER TABLE `dependencies`
+  ADD PRIMARY KEY (`materia_id`,`dependency`);
 
 --
 -- Indices de la tabla `documentacion`
@@ -653,17 +681,17 @@ ALTER TABLE `turnos`
   ADD PRIMARY KEY (`turno_id`);
 
 --
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`usuario_id`);
+
+--
 -- Indices de la tabla `user_roles`
 --
 ALTER TABLE `user_roles`
   ADD PRIMARY KEY (`usuario_id`,`role_id`),
   ADD KEY `user_roles_role_id_fkey` (`role_id`);
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`usuario_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -760,10 +788,10 @@ ALTER TABLE `turnos`
   MODIFY `turno_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT de la tabla `users`
 --
-ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `users`
+  MODIFY `usuario_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -787,7 +815,7 @@ ALTER TABLE `asistencia`
 -- Filtros para la tabla `caja`
 --
 ALTER TABLE `caja`
-  ADD CONSTRAINT `caja_FK` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`);
+  ADD CONSTRAINT `caja_FK` FOREIGN KEY (`usuario_id`) REFERENCES `users` (`usuario_id`);
 
 --
 -- Filtros para la tabla `carga_horaria`
@@ -807,6 +835,12 @@ ALTER TABLE `carreras`
 --
 ALTER TABLE `cuotas`
   ADD CONSTRAINT `cuotas_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`alumno_id`);
+
+--
+-- Filtros para la tabla `dependencies`
+--
+ALTER TABLE `dependencies`
+  ADD CONSTRAINT `dependencies_FK` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`materia_id`);
 
 --
 -- Filtros para la tabla `documentacion`
@@ -862,7 +896,7 @@ ALTER TABLE `permission_role`
 -- Filtros para la tabla `permission_user`
 --
 ALTER TABLE `permission_user`
-  ADD CONSTRAINT `permission_user_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`),
+  ADD CONSTRAINT `permission_user_fk` FOREIGN KEY (`usuario_id`) REFERENCES `users` (`usuario_id`),
   ADD CONSTRAINT `permission_user_permission_id_fkey` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -876,7 +910,7 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `user_roles`
   ADD CONSTRAINT `user_roles_role_id_fkey` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_roles_user_id_fkey` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_roles_user_id_fkey` FOREIGN KEY (`usuario_id`) REFERENCES `users` (`usuario_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

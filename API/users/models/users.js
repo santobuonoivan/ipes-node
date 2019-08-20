@@ -1,78 +1,80 @@
-const config =  require('config');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const joi = require('joi');
-
+/* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('users',
-		{
-		id: {
-			// type: DataTypes.INTEGER(11), for mysql
-			type: DataTypes.INTEGER,
+	return sequelize.define('users', {
+		usuario_id: {
+			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		uid: {
-			type: DataTypes.STRING(36),
-			defaultValue: DataTypes.UUIDV1,
-			allowNull: false,
-			unique: true
-		},
-		first_name: {
-			type: DataTypes.STRING(200),
-			allowNull: true
-		},
-		middle_name: {
-			type: DataTypes.STRING(100),
-			allowNull: true
-		},
-		last_name: {
-			type: DataTypes.STRING(200),
-			allowNull: true
-		},
-		username: {
-			type: DataTypes.STRING(100),
-			allowNull: false,
-			unique: true
-		},
-		email: {
-			type: DataTypes.STRING(191),
-			allowNull: false,
-			unique: true
-		},
-		password: {
-			type: DataTypes.STRING(191),
+		apellido: {
+			type: DataTypes.STRING(50),
 			allowNull: false
 		},
-		address: {
-			type: DataTypes.STRING(191),
+		nombre: {
+			type: DataTypes.STRING(50),
+			allowNull: false
+		},
+		dni: {
+			type: DataTypes.INTEGER(9),
+			allowNull: false
+		},
+		clave: {
+			type: DataTypes.STRING(20),
+			allowNull: false
+		},
+		usuario: {
+			type: DataTypes.STRING(20),
+			allowNull: false
+		},
+		fechadecumpleanios: {
+			type: DataTypes.DATEONLY,
+			allowNull: false
+		},
+		email: {
+			type: DataTypes.STRING(70),
+			allowNull: false
+		},
+		perfil: {
+			type: DataTypes.STRING(15),
 			allowNull: true
 		},
-		zip_code: {
-			type: DataTypes.STRING(191),
+		turno: {
+			type: DataTypes.STRING(15),
 			allowNull: true
 		},
-		phone: {
-			type: DataTypes.STRING(191),
-			allowNull: true
+		tel: {
+			type: DataTypes.STRING(20),
+			allowNull: false
 		},
-		mobile: {
-			type: DataTypes.STRING(191),
-			allowNull: true
+		celular: {
+			type: DataTypes.STRING(20),
+			allowNull: false
 		},
-		city: {
-			type: DataTypes.STRING(191),
-			allowNull: true
+		direccion1: {
+			type: DataTypes.STRING(70),
+			allowNull: false
 		},
-		state: {
-			type: DataTypes.STRING(191),
-			allowNull: true
+		direccion2: {
+			type: DataTypes.STRING(70),
+			allowNull: false
+		},
+		provincia: {
+			type: DataTypes.STRING(20),
+			allowNull: false
+		},
+		ciudad: {
+			type: DataTypes.STRING(20),
+			allowNull: false
 		},
 		country: {
 			type: DataTypes.STRING(191),
 			allowNull: true
+		},
+		codigopostal: {
+			type: DataTypes.STRING(10),
+			allowNull: false
 		},
 		is_active: {
 			// type: DataTypes.INTEGER(4), for mysql
@@ -84,16 +86,8 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING(191),
 			allowNull: true
 		},
-		deleted_at: {
-			type: DataTypes.DATE,
-			allowNull: true
-		}
-	},
-		{
-			tableName: 'users',
-			underscored:true
-		}
-	);
+	}, {
+		tableName: 'users',
+		timestamps: false
+	});
 };
-
-
