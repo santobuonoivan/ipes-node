@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('turnos', {
-		id: {
+		turno_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,

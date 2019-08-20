@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			references: {
 				model: 'alumnos',
-				key: 'id'
+				key: 'alumno_id'
 			}
 		},
 		concepto: {
@@ -28,8 +28,8 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER(11),
 			allowNull: false
 		},
-		pasada: {
-			type: DataTypes.INTEGER(11),
+		fecha_pasada: {
+			type: DataTypes.DATE,
 			allowNull: true
 		}
 	}, {

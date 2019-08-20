@@ -1,12 +1,7 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('documentacion', {
-		documentacion_id: {
-			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: false,
-			primaryKey: true
-		},
+	return sequelize.define('alumnos_x_carreras', {
 		alumno_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
@@ -16,19 +11,16 @@ module.exports = function(sequelize, DataTypes) {
 				key: 'alumno_id'
 			}
 		},
-		fecha_alta: {
-			type: DataTypes.DATE,
-			allowNull: true
-		},
-		doc_type_id: {
+		carrera_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
+			primaryKey: true,
 			references: {
-				model: 'doc_type',
-				key: 'doc_type_id'
+				model: 'carreras',
+				key: 'carrera_id'
 			}
 		}
 	}, {
-		tableName: 'documentacion'
+		tableName: 'alumnos_x_carreras'
 	});
 };

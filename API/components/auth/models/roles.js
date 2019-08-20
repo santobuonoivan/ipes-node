@@ -1,22 +1,30 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('materias', {
-		materia_id: {
+	return sequelize.define('roles', {
+		role_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		nombre: {
-			type: DataTypes.STRING(70),
+		name: {
+			type: DataTypes.STRING(100),
 			allowNull: false
 		},
-		id_alumno: {
+		parent: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
+			allowNull: true,
+			references: {
+				model: 'roles',
+				key: 'role_id'
+			}
+		},
+		is_active: {
+			type: DataTypes.INTEGER(1),
 			allowNull: false
 		}
 	}, {
-		tableName: 'materias'
+		tableName: 'roles'
 	});
 };

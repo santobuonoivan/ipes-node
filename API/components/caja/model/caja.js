@@ -5,12 +5,16 @@ module.exports = function(sequelize, DataTypes) {
 		id_caja: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
-			primaryKey: true,
-			autoIncrement: true
+			primaryKey: true
 		},
 		usuario_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: false
+			allowNull: false,
+			primaryKey: true,
+			references: {
+				model: 'usuarios',
+				key: 'usuario_id'
+			}
 		},
 		importe: {
 			type: DataTypes.DECIMAL,

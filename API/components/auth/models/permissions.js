@@ -1,26 +1,26 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('modalidades', {
-		id: {
+	return sequelize.define('permissions', {
+		permission_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		p: {
-			type: DataTypes.INTEGER(11),
+		title: {
+			type: DataTypes.STRING(100),
 			allowNull: false
 		},
-		sp: {
-			type: DataTypes.INTEGER(11),
+		module: {
+			type: DataTypes.STRING(50),
 			allowNull: false
 		},
-		v: {
-			type: DataTypes.INTEGER(11),
+		action: {
+			type: DataTypes.STRING(50),
 			allowNull: false
 		}
 	}, {
-		tableName: 'modalidades'
+		tableName: 'permissions'
 	});
 };

@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('alumnos', {
-		id: {
+		alumno_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
@@ -30,11 +30,7 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		id_carrera: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: true,
-			references: {
-				model: 'carreras',
-				key: 'id'
-			}
+			allowNull: true
 		},
 		fechadeinscripcion: {
 			type: DataTypes.DATEONLY,
@@ -91,14 +87,6 @@ module.exports = function(sequelize, DataTypes) {
 		trabajo: {
 			type: DataTypes.STRING(70),
 			allowNull: true
-		},
-		id_documentacion: {
-			type: DataTypes.INTEGER(9).UNSIGNED,
-			allowNull: true,
-			references: {
-				model: 'documentacion',
-				key: 'id'
-			}
 		},
 		conocio: {
 			type: DataTypes.STRING(250),

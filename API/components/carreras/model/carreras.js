@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('carreras', {
-		id: {
+		carrera_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			primaryKey: true,
@@ -12,20 +12,20 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING(70),
 			allowNull: false
 		},
-		modalidades: {
+		mod_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			references: {
 				model: 'modalidades',
-				key: 'id'
+				key: 'mod_id'
 			}
 		},
-		turnos: {
+		turno_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			references: {
 				model: 'turnos',
-				key: 'id'
+				key: 'turno_id'
 			}
 		},
 		cantidadanios: {
