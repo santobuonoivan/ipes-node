@@ -16,6 +16,13 @@ app.use(cors());
 //app.use(express.static('./public'));
 
 // Routes
+var authRouter = require('./Auth/AuthRoutes');
+var userRoutes = require('./users/routes/UserRoutes');
+var rolesRoutes = require('./users/routes/RoleRoutes');
+var permissionsRoutes = require('./users/routes/PermissionsRoutes');
+var userRolerRoutes = require('./users/routes/UserRolesRoutes');
+var userPermissions = require('./users/routes/UserPermissionsRoutes');
+
 
 var alumnRoutes = require('./components/alumno/router/alumno');
 var cajaRoutes = require('./components/caja/router/caja');
@@ -34,6 +41,12 @@ var alarmRulesRoutes = require('./components/alarmsRules/routes/alarmRulesRoutes
 var homeScreen = require('./components/graphicComponents/homeScreen/homeScreeRoutes');
 */
 
+app.use('/users', userRoutes);
+app.use('/auth',authRouter);
+app.use('/roles', rolesRoutes);
+app.use('/permissions', permissionsRoutes);
+app.use('/userroles', userRolerRoutes);
+app.use('/userpermissions', userPermissions);
 app.use('/alumn', alumnRoutes);
 
 /* TODO  se impleenta en los insert de alumno */
