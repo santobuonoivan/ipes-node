@@ -6,8 +6,8 @@ const {users } = require('../../components/db/db.mariadb.config');
 
 /* TODO hacer validate para update que no sean todos los campos requeridos */
 function generateAuthToken(user) {
-    const { id, email } = user;
-    const token = jwt.sign({id:id, email:email}, config.get('jwtPrivateKey'));
+    const { usuario_id, email } = user;
+    const token = jwt.sign({id:usuario_id, email:email}, config.get('jwtPrivateKey'));
     return token;
 }
 

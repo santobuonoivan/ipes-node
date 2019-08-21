@@ -22,25 +22,28 @@ module.exports = function haspermissions(module, action){
 
 
         //verifies if the auth user has direct permission
-        let permissions_user_db = await permission_user.findOne({where:{user_id:user.id, permission_id:permissionsdb.id}});
+        let permissions_user_db = await permission_user.findOne({where:{usuario_id:user.usuario_id, permission_id:permissionsdb.permission_id}});
 
         if(permissions_user_db)
             return next();
 
         // retrieves all roles with this permission
-        let permissions_roles_db = await permission_role.findAll({where:{permission_id:permissionsdb.id}});
-
-        // retrieves all user roles
-        let user_roles_db = await user_roles.findAll({where:{user_id:user.id}}).catch( reason => {
+        let permissions_roles_db = await permission_role.findAll({where:{permission_id:permissionsdb.permission_id}}).catch( reason => {
             console.log(reason);
         });
-        const reverse = await reverseLookUp(permissions_roles_db,user_roles_db);
-        console.log(reverse)
-        if(reverse)
-            return next();
+        // retrieves all user roles
+        let user_roles_db = await user_roles.findAll({where:{usuario_id:user.usuario_id}}).catch( reason => {
+            console.log(reason);
+        });
+        if (permissions_roles_db != null & user_roles_db != null){
+            const reverse = await reverseLookUp(permissions_roles_db,user_roles_db);
+            console.log(reverse)
+            if(reverse)
+                return next();
+        }
         return res.status(401).send({message:"Unauthorized access"});
     }
-}
+};
 
 async function reverseLookUp(permissions_roles_db, user_roles_db){
     let permissions_roles_ids = new Array(), user_roles_ids = new Array();

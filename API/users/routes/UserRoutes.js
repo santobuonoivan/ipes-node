@@ -2,7 +2,7 @@ const express = require('express');
 const env = require('dotenv').config();
 const router = express.Router();
 const cors = require('cors');
-const authMiddleware = require('../../middleware/auth')
+const authMiddleware = require('../../middleware/auth');
 const authorization = require('../../middleware/authorization');
 const userController = require('../controllers/UserController');
 
@@ -18,3 +18,5 @@ router.get('/:id',[cors(), authMiddleware, authorization('users', 'show')], user
 
 
 module.exports = router;
+
+

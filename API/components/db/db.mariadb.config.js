@@ -11,6 +11,13 @@ const db ={};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.users = require('../../users/models/users')(sequelize,Sequelize);
+db.roles = require('../../users/models/roles')(sequelize,Sequelize);
+db.user_roles = require('../../users/models/user_roles')(sequelize,Sequelize);
+db.permissions = require('../../users/models/permissions')(sequelize,Sequelize);
+db.permission_user = require('../../users/models/permission_user')(sequelize,Sequelize);
+db.permission_role = require('../../users/models/permission_role')(sequelize, Sequelize);
+
 /*
 db.alumno = require('../alumno/model/alumno')(sequelize,Sequelize);
 db.caja = require('../caja/model/caja')(sequelize,Sequelize);
@@ -24,7 +31,6 @@ db.modalidades = require('../modalidades/model/modalidades')(sequelize,Sequelize
 db.notas = require('../notas/model/notas')(sequelize, Sequelize);
 db.pagos = require('../pagos/model/pagos')(sequelize,Sequelize);
 db.turnos = require('../turnos/model/turnos')(sequelize,Sequelize);*/
-db.users = require('../../users/models/users')(sequelize,Sequelize);
 
 /* es necesario desde el mas particular al general entonces se necesita hacer belongsto antes de un hasmany */
 // Caja
@@ -54,6 +60,12 @@ db.alumno.belongsTo(db.documentacion, {as: 'documentacion', foreignKey:'alumnos_
 */
 
 
+db.users.belongsToMany(db.roles, {through:'user_roles', foreignKey:'usuario_id'});
+db.roles.belongsToMany(db.users, {through: 'user_roles', foreignKey: 'role_id'});
+db.users.belongsToMany(db.permissions, {through: 'permission_user', foreignKey:'usuario_id'});
+db.permissions.belongsToMany(db.users, {through:'permission_user', foreignKey:'permission_id'});
+db.roles.belongsTo(db.roles, {foreignKey:'parent'});
+db.permissions.belongsToMany(db.roles, {through: 'permission_role', foreignKey:'permission_id'});
 
 
 db.sequelize.sync({force:false}).then(() =>  {});
