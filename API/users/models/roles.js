@@ -26,6 +26,7 @@ module.exports = function(sequelize, DataTypes) {
 		}
 	}, {
 		tableName: 'roles',
-		timestamps: false
+		timestamps: false,
+		underscored: true
 	});
 };

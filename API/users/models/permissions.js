@@ -22,6 +22,7 @@ module.exports = function(sequelize, DataTypes) {
 		}
 	}, {
 		tableName: 'permissions',
-		timestamps: false
+		timestamps: false,
+		underscored: true
 	});
 };

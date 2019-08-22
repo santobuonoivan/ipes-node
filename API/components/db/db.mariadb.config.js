@@ -60,12 +60,12 @@ db.alumno.belongsTo(db.documentacion, {as: 'documentacion', foreignKey:'alumnos_
 */
 
 
-db.users.belongsToMany(db.roles, {through:'user_roles', foreignKey:'usuario_id'});
+db.users.belongsToMany(db.roles, {through:'user_roles', foreignKey:'usuario_id',otherKey:'role_id'});
 db.roles.belongsToMany(db.users, {through: 'user_roles', foreignKey: 'role_id'});
-db.users.belongsToMany(db.permissions, {through: 'permission_user', foreignKey:'usuario_id'});
+db.users.belongsToMany(db.permissions, {through: 'permission_user', foreignKey:'usuario_id', otherKey: 'permission_id'});
 db.permissions.belongsToMany(db.users, {through:'permission_user', foreignKey:'permission_id'});
 db.roles.belongsTo(db.roles, {foreignKey:'parent'});
-db.permissions.belongsToMany(db.roles, {through: 'permission_role', foreignKey:'permission_id'});
+db.permissions.belongsToMany(db.roles, {through: 'permission_role', foreignKey:'permission_id', otherKey:'role_id'});
 
 
 db.sequelize.sync({force:false}).then(() =>  {});

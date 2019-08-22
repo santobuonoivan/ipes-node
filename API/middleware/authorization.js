@@ -28,19 +28,18 @@ module.exports = function haspermissions(module, action){
             return next();
 
         // retrieves all roles with this permission
-        let permissions_roles_db = await permission_role.findAll({where:{permission_id:permissionsdb.permission_id}}).catch( reason => {
+        let permissions_roles_db = await permission_role.findAll({where:{permission_id:permissionsdb.permission_id}})/*.catch( reason => {
             console.log(reason);
-        });
+        })*/;
         // retrieves all user roles
         let user_roles_db = await user_roles.findAll({where:{usuario_id:user.usuario_id}}).catch( reason => {
             console.log(reason);
         });
-        if (permissions_roles_db != null & user_roles_db != null){
-            const reverse = await reverseLookUp(permissions_roles_db,user_roles_db);
-            console.log(reverse)
-            if(reverse)
-                return next();
-        }
+        const reverse = await reverseLookUp(permissions_roles_db,user_roles_db);
+        console.log(reverse);
+        if(reverse)
+            return next();
+
         return res.status(401).send({message:"Unauthorized access"});
     }
 };
@@ -60,15 +59,20 @@ async function reverseLookUp(permissions_roles_db, user_roles_db){
     }
     for (let i = 0; i < permissions_roles_ids.length; i++) {
         let actualRole = await roles.findByPk(permissions_roles_ids[i]);
-        if(user_roles_ids.includes(actualRole.id)){
+        if(user_roles_ids.includes(actualRole.role_id)){
             return true;
         }
         while(actualRole.parent != null){
             actualRole = await roles.findByPk(actualRole.parent);
-            if(user_roles_ids.includes(actualRole.id)){
+            if(user_roles_ids.includes(actualRole.role_id)){
                 return true;
             }
         }
     }
     return false;
 };
+
+
+
+
+

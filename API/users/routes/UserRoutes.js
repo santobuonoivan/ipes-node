@@ -16,7 +16,12 @@ router.delete('/:id',[cors(), authMiddleware, authorization('users','delete')], 
 
 router.get('/:id',[cors(), authMiddleware, authorization('users', 'show')], userController.show_user);
 
-
 module.exports = router;
+
+
+
+
+
+
 
 

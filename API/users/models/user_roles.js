@@ -22,6 +22,7 @@ module.exports = function(sequelize, DataTypes) {
 		}
 	}, {
 		tableName: 'user_roles',
-		timestamps: false
+		timestamps: false,
+		underscored: true
 	});
 };

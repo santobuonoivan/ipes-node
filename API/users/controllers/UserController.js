@@ -70,7 +70,7 @@ exports.update_user = async function (req, res, next) {
     if(error) return res.status(400).send({message: error.details[0].message});
 
     if( !(await userService.validateUserExist({id: req.params.id}))) return res.status(400).send({message: 'User dont found'});
-
+    req.body.id = parseInt( req.params.id );
     if( await userService.validateEmailExist(req.body)) return res.status(400).send({message: 'Email is already used'});
 
 
@@ -79,7 +79,7 @@ exports.update_user = async function (req, res, next) {
         req.body.clave = await bcrypt.hash(req.body.clave, salt);
     }
     try {
-        result = await users.update(req.body,{where:{id:req.params.id}});
+        result = await users.update(req.body,{where:{usuario_id:req.params.id}});
         console.log(result);
         return res.json({message:'ok update'});
     }catch (e) {
@@ -90,7 +90,7 @@ exports.update_user = async function (req, res, next) {
 exports.delete_user = async function (req, res, next) {
     try {
         if( !(await userService.validateUserExist({id: req.params.id}))) return res.status(404).send({message: 'User dont found'});
-        const result = await users.destroy({where: {id:req.params.id}});
+        const result = await users.destroy({where: {usuario_id:req.params.id}});
         if(result > 0)
             return res.send({message:`${ result } user deleted`});
         else{
@@ -104,7 +104,7 @@ exports.delete_user = async function (req, res, next) {
 
 exports.show_user = async function (req, res, next) {
     try{
-        const result = await users.findOne({where:{id:req.params.id}});
+        const result = await users.findOne({where:{usuario_id:req.params.id}});
         if(!result) return res.send({message: 'user not found'});
         console.log(result);
         return res.send(result);

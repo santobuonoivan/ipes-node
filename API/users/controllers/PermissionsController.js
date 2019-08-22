@@ -24,7 +24,7 @@ exports.insert_permission = async function (req, res, next) {
     if ( error ) return res.status(400).send({message: error.details[0].message});
     try {
         let result = await permissions.create(req.body);
-        console.log(result);
+        //console.log(result);
         return res.status(201).send(result);
     }catch (e) {
         return res.status(400).send({error: e.errors[0].message});
@@ -36,8 +36,8 @@ exports.update_permission = async function (req, res, next) {
     if ( error ) return res.status(400).send({message: error.details[0].message});
 
     try {
-        let result = await permissions.update(req.body,{where:{id:req.params.id}});
-        console.log(result);
+        let result = await permissions.update(req.body,{where:{permission_id:req.params.id}});
+        //console.log(result);
         return res.send({message: `${result} records successfully updated`});
     }catch (e) {
         return res.status(400).send({error:e.errors[0].message});
@@ -57,7 +57,7 @@ exports.show_permission = async function(req, res, next){
 
 exports.delete_permission = async function(req, res, next){
     try {
-        let result = await permissions.destroy({where:{id:req.params.id}})
+        let result = await permissions.destroy({where:{permission_id:req.params.id}})
         if(result > 0) {
             console.log(result);
             return res.send({message: `${result} records deleted`});

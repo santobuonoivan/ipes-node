@@ -2,6 +2,8 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const Joi = require('@hapi/joi');
 const {users } = require('../../components/db/db.mariadb.config');
+const {Sequelize} = require('sequelize');
+const Op = Sequelize.Op;
 
 
 /* TODO hacer validate para update que no sean todos los campos requeridos */
@@ -39,21 +41,28 @@ function validateUser(user) {
 
 exports.validateEmailExist = async function (user){
     try{
-        const resultFind = await users.findOne({where:{email:user.email}});
+        const resultFind = await users.findOne({
+            where:{
+                email:user.email,
+                usuario_id:{
+                    [Op.not]: user.id
+                }
+            }
+        });
         if(!resultFind) return false;
         return true;
     }catch (e) {
-        return res.status(400).send({message: `can't show record ${e.errors[0].message}`});
+        return e;
     }
 };
 
 exports.validateUserExist = async function (user) {
     try {
-        const resultFind = await users.findOne({where: {uid: user.uid}});
+        const resultFind = await users.findOne({where: {usuario_id: user.id}});
         if(!resultFind) return false;
         return true;
     } catch (e) {
-        return res.status(400).send({message: `can't show record ${e.errors[0].message}`});
+        return e;
     }
 };
 exports.generateAuthToken = generateAuthToken;
