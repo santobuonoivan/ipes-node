@@ -18,55 +18,52 @@ db.permissions = require('../../users/models/permissions')(sequelize,Sequelize);
 db.permission_user = require('../../users/models/permission_user')(sequelize,Sequelize);
 db.permission_role = require('../../users/models/permission_role')(sequelize, Sequelize);
 
-/*
+
 db.alumno = require('../alumno/model/alumno')(sequelize,Sequelize);
-db.caja = require('../caja/model/caja')(sequelize,Sequelize);
-db.entrada = require('../caja/model/entradas')(sequelize,Sequelize);
-db.salida = require('../caja/model/salidas')(sequelize,Sequelize);
-db.carrera = require('../carreras/model/carreras')(sequelize,Sequelize);
 db.cuota = require('../cuotas/model/cuotas')(sequelize,Sequelize);
 db.documentacion = require('../documentacion/model/documentacion')(sequelize,Sequelize);
+db.pagos = require('../pagos/model/pagos')(sequelize,Sequelize);
+/* TODO falta hacer la coneccion de carreras materias alumno*/
+db.carrera = require('../carreras/model/carreras')(sequelize,Sequelize);
+
+
+db.caja = require('../caja/model/caja')(sequelize,Sequelize);
+db.movimientos = require('../caja/model/movimientos')(sequelize,Sequelize);
+db.movimientos_types = require('../caja/model/movimientos_types')(sequelize,Sequelize);
+
+/*
 db.materia = require('../materias/model/materias')(sequelize,Sequelize);
 db.modalidades = require('../modalidades/model/modalidades')(sequelize,Sequelize);
-db.notas = require('../notas/model/notas')(sequelize, Sequelize);
-db.pagos = require('../pagos/model/pagos')(sequelize,Sequelize);
 db.turnos = require('../turnos/model/turnos')(sequelize,Sequelize);*/
 
 /* es necesario desde el mas particular al general entonces se necesita hacer belongsto antes de un hasmany */
 // Caja
-/*
-db.entrada.belongsTo(db.caja, {as: 'caja', foreignKey:'entradas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
-db.caja.hasMany(db.entrada, {as: 'entradas', foreignKey:'entradas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
-db.salida.belongsTo(db.caja, {as: 'caja', foreignKey:'salidas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
-db.caja.hasMany(db.salida, {as: 'salidas', foreignKey:'salidas_FK', targetKey:'id_caja', sourceKey:'id_caja'});
-*/
+
+//db.movimientos_types.belongsTo(db.movimientos, {as: 'caja', foreignKey:'movimiento_type_id', targetKey:'movimiento_type_id', sourceKey:'movimiento_type_id'});
+db.movimientos.belongsTo(db.movimientos_types, {as: 'movimientos_types', foreignKey:'movimiento_type_id', targetKey:'movimiento_type_id', sourceKey:'movimiento_type_id'});
+db.movimientos_types.hasMany(db.movimientos, {as: 'movimientos', foreignKey:'movimiento_type_id', targetKey:'movimiento_type_id', sourceKey:'movimiento_type_id'});
+
+
+db.movimientos.belongsTo(db.caja, {as: 'caja', foreignKey:'id_caja', targetKey:'id_caja', sourceKey:'id_caja'});
+db.caja.hasMany(db.movimientos, {as: 'movimientos', foreignKey:'id_caja', targetKey:'id_caja', sourceKey:'id_caja'});
+
+
 
 // Alumno
-/*
-db.cuota.belongsTo(db.alumno, {as: 'alumno', foreignKey:'cuotas_alumno_FK', targetKey:'id', sourceKey:'id_alumno'});
-db.alumno.hasMany(db.cuota, {as: 'cuotas', foreignKey:'cuotas_alumno_FK', targetKey:'id_alumno', sourceKey:'id'});
+db.cuota.belongsTo(db.alumno, {as: 'alumno', foreignKey:'alumno_id', targetKey:'alumno_id', sourceKey:'alumno_id'});
+db.alumno.hasMany(db.cuota, {as: 'cuotas', foreignKey:'alumno_id', targetKey:'alumno_id', sourceKey:'alumno_id'});
+db.pagos.belongsTo(db.alumno, {as: 'alumno', foreignKey:'alumno_id', targetKey:'alumno_id', sourceKey:'alumno_id'});
+db.alumno.hasMany(db.pagos, {as: 'pagos', foreignKey:'alumno_id', targetKey:'alumno_id', sourceKey:'alumno_id'});
+db.documentacion.belongsTo(db.alumno, {as: 'alumno', foreignKey:'alumno_id', targetKey:'alumno_id', sourceKey:'alumno_id'});
+db.alumno.hasMany(db.documentacion, {as: 'documentacion', foreignKey:'alumno_id', targetKey:'alumno_id', sourceKey:'alumno_id'});
 
-db.pagos.belongsTo(db.alumno, {as: 'alumno', foreignKey:'pagos_alumno_FK', targetKey:'id', sourceKey:'id_alumno'});
-db.alumno.hasMany(db.pagos, {as: 'pagos', foreignKey:'pagos_alumno_FK', targetKey:'id_alumno', sourceKey:'id'});
-
-db.notas.belongsTo(db.alumno, {as: 'alumno', foreignKey:'notas_alumno_FK', targetKey:'id', sourceKey:'id_alumno'});
-db.alumno.hasMany(db.notas, {as: 'notas', foreignKey:'notas_alumno_FK', targetKey:'id_alumno', sourceKey:'id'});
-
-db.carrera.belongsTo(db.alumno, {as: 'alumno', foreignKey:'alumnos_carreras_FK', targetKey:'id_carrera', sourceKey:'id'});
-db.alumno.hasMany(db.carrera, {as: 'carrera', foreignKey:'alumnos_carreras_FK', targetKey:'id', sourceKey:'id_carrera'});
-
-db.documentacion.belongsTo(db.alumno, {as: 'alumno', foreignKey:'alumnos_documentacion_FK', targetKey:'id_documentacion', sourceKey:'id'});
-db.alumno.belongsTo(db.documentacion, {as: 'documentacion', foreignKey:'alumnos_documentacion_FK', targetKey:'id', sourceKey:'id_documentacion'});
-*/
-
-
+// Permissions Roles
 db.users.belongsToMany(db.roles, {through:'user_roles', foreignKey:'usuario_id',otherKey:'role_id'});
 db.roles.belongsToMany(db.users, {through: 'user_roles', foreignKey: 'role_id'});
 db.users.belongsToMany(db.permissions, {through: 'permission_user', foreignKey:'usuario_id', otherKey: 'permission_id'});
 db.permissions.belongsToMany(db.users, {through:'permission_user', foreignKey:'permission_id'});
 db.roles.belongsTo(db.roles, {foreignKey:'parent'});
 db.permissions.belongsToMany(db.roles, {through: 'permission_role', foreignKey:'permission_id', otherKey:'role_id'});
-
 
 db.sequelize.sync({force:false}).then(() =>  {});
 

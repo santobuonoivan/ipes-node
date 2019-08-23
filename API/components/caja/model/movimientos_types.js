@@ -21,6 +21,8 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false
 		}
 	}, {
-		tableName: 'movimientos_types'
+		tableName: 'movimientos_types',
+		underscored:true,
+		timestamps: false
 	});
 };

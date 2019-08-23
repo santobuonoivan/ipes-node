@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"dni\": 999,\n    \"nombre\": \"Serene\",\n    \"apellido\": \"Igonet\",\n    \"sexo\": \"F\",\n    \"legajo\": 1,\n    \"idcarrera\": 2,\n    \"fechadeinscripcion\": \"2017-08-28\",\n    \"modalidad\": \"P\",\n    \"turno\": \"m\",\n    \"anio_carrera\": 4,\n    \"activo\": 1,\n    \"fechadenacimiento\": \"1932-02-15\",\n    \"direccion\": \"60 Dunning Crossing\",\n    \"tel\": \"(830) 9096281\",\n    \"celular\": \"+7 202 904 0177\",\n    \"estadocivil\": \"separado\",\n    \"secundario\": \"tecnico\",\n    \"email\": \"sigonet0@japanpost.jp\",\n    \"facebook\": \"Serene Igonet\",\n    \"trabajo\": \"Brightdog\",\n    \"id_documentacion\": 1,\n    \"conocio\": \"\",\n    \"promo\": \"\"\n}"
+							"raw": "{\n\t\"dni\": 9999,\n    \"nombre\": \"Serene\",\n    \"apellido\": \"Igonet\",\n    \"sexo\": \"F\",\n    \"legajo\": 1,\n    \"idcarrera\": null,\n    \"fechadeinscripcion\": \"2017-08-28\",\n    \"modalidad\": \"P\",\n    \"turno\": \"m\",\n    \"anio_carrera\": 4,\n    \"activo\": 1,\n    \"fechadenacimiento\": \"1932-02-15\",\n    \"direccion\": \"60 Dunning Crossing\",\n    \"tel\": \"(830) 9096281\",\n    \"celular\": \"+7 202 904 0177\",\n    \"estadocivil\": \"separado\",\n    \"secundario\": \"tecnico\",\n    \"email\": \"sigonet0@japanpost.jp\",\n    \"facebook\": \"Serene Igonet\",\n    \"trabajo\": \"Brightdog\",\n    \"id_documentacion\": null,\n    \"conocio\": null,\n    \"promo\": null\n}"
 						},
 						"url": {
 							"raw": "{{url}}/alumn/",
@@ -101,16 +101,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"dni\":90\n}"
+							"raw": "{\n\t\"dni\":2222\n}"
 						},
 						"url": {
-							"raw": "{{url}}/alumn/103",
+							"raw": "{{url}}/alumn/3",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"alumn",
-								"103"
+								"3"
 							]
 						}
 					},
@@ -130,13 +130,71 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "{{url}}/alumn/103",
+							"raw": "{{url}}/alumn/3",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"alumn",
-								"103"
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get cuotas pagos alumno",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{x-auth-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/alumn/2/cuotas_pagos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alumn",
+								"2",
+								"cuotas_pagos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get full info alumno",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{x-auth-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/alumn/2/full_info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alumn",
+								"2",
+								"full_info"
 							]
 						}
 					},
@@ -730,6 +788,171 @@
 			"name": "user",
 			"item": [
 				{
+					"name": "roles",
+					"item": [],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "permissions",
+					"item": [
+						{
+							"name": "list permisions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{x-auth-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/permissions/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"permissions",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add permission",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-auth-token",
+										"value": "{{x-auth-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Users TEST insert\",\n    \"module\": \"users\",\n    \"action\": \"TEST\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/permissions",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get one permission",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{x-auth-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/permissions/18",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"permissions",
+										"18"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update permision",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-auth-token",
+										"value": "{{x-auth-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Users TEST UPDATE insert\",\n    \"module\": \"users\",\n    \"action\": \"TEST\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/permissions/18",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"permissions",
+										"18"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete one permision",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-auth-token",
+										"value": "{{x-auth-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/permissions/18",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"permissions",
+										"18"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "get token autenticar",
 					"request": {
 						"method": "POST",
@@ -908,165 +1131,6 @@
 							"path": [
 								"users",
 								"2"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "permissions",
-			"item": [
-				{
-					"name": "list permisions",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-auth-token",
-								"value": "{{x-auth-token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{url}}/permissions/",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"permissions",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "add permission",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-auth-token",
-								"value": "{{x-auth-token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Users TEST insert\",\n    \"module\": \"users\",\n    \"action\": \"TEST\"\n}"
-						},
-						"url": {
-							"raw": "{{url}}/permissions",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"permissions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get one permission",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-auth-token",
-								"value": "{{x-auth-token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{url}}/permissions/18",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"permissions",
-								"18"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update permision",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-auth-token",
-								"value": "{{x-auth-token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Users TEST UPDATE insert\",\n    \"module\": \"users\",\n    \"action\": \"TEST\"\n}"
-						},
-						"url": {
-							"raw": "{{url}}/permissions/18",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"permissions",
-								"18"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete one permision",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "x-auth-token",
-								"value": "{{x-auth-token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{url}}/permissions/18",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"permissions",
-								"18"
 							]
 						}
 					},

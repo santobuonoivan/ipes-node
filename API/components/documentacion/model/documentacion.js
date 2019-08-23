@@ -29,6 +29,8 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		}
 	}, {
-		tableName: 'documentacion'
+		tableName: 'documentacion',
+		underscored: true,
+		timestamps: false
 	});
 };

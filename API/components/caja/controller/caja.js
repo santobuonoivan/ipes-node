@@ -1,6 +1,4 @@
-const { caja } = require('../../db/db.mariadb.config');
-const { entrada } = require('../../db/db.mariadb.config');
-const { salida } = require('../../db/db.mariadb.config');
+const { caja,movimientos_types,movimientos } = require('../../db/db.mariadb.config');
 
 //const cajaService = require('../service/caja');
 //const entradaService = require('../service/entrada');
@@ -11,13 +9,23 @@ const _ = require('lodash');
     /* GET ALL */
     exports.all_cajas = async function (req, res, next) {
         try{
-            const cajasList = await caja.findAll();
+            const cajasList = await caja.findAll({
+                include: [{
+                    model: movimientos,
+                    as: 'movimientos',
+                    include: [{
+                        model: movimientos_types,
+                            as: 'movimientos_types'
+                    }]
+                }]
+            });
+
             if(cajasList.length > 0)
                 return res.send({
                     ok:true,
                     cajasList
                 });
-            return res.send('alumns not found');
+            return res.send({message: 'caja not found'});
         }catch (e) {
             return res.status(400).send({
                 ok: false,
@@ -40,7 +48,6 @@ const _ = require('lodash');
             try{
                 let maxId = await caja.sequelize.query("select max(id_caja) from caja");
                 maxId =  maxId[0][0]['max(id_caja)'];
-                console.log(maxId);
                 maxId +=1 ;
                 req.body.id = maxId;
                 result = await caja.create(req.body);

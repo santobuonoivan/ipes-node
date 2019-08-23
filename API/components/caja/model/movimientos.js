@@ -46,6 +46,8 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		}
 	}, {
-		tableName: 'movimientos'
+		tableName: 'movimientos',
+		underscored:true,
+		timestamps: false
 	});
 };

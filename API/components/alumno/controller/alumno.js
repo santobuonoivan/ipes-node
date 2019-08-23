@@ -12,9 +12,9 @@ exports.all_alumns = async function (req, res, next) {
                 ok:true,
                 alumnsList
             });
-        return res.send('alumns not found');
+        return res.send({ok: false, message: 'alumns not found'});
     }catch (e) {
-        return res.status(400).send(e.errors[0].message);
+        return res.status(400).send({error: e.errors[0].message});
     }
 };
 
@@ -30,7 +30,7 @@ exports.insert_alumn = async function (req, res, next) {
     let result = null, cont = 0;
     while(result == null && cont <=3){
         try{
-            let maxId = await alumno.sequelize.query("select max(id) from alumnos");
+            let maxId = await alumno.sequelize.query("select max(alumno_id) as max from alumnos");
             maxId = maxId[0][0].max;
             maxId +=1 ;
             req.body.id = maxId;
@@ -59,7 +59,7 @@ exports.update_alumn = async function (req, res, next) {
     //const { error } = alumnService.validateAlumn(req.body);
     //if(error) return res.status(400).send(error.details[0].message);
     try {
-        let result = await alumno.update(req.body,{where: {id:req.params.id}});
+        let result = await alumno.update(req.body,{where: {alumno_id:req.params.id}});
         return res.send({
             ok: true,
             menssage: `${ result } records updated`
@@ -75,7 +75,7 @@ exports.update_alumn = async function (req, res, next) {
 /* DELETE ONE (desactivar)*/
 exports.delete_alumn = async function(req, res, next){
     try {
-        let result = await alumno.update({activo:false},{where:{id:req.params.id}});
+        let result = await alumno.update({activo:false},{where:{alumno_id:req.params.id}});
         //console.log(result);
         return res.send({
             ok:true,
@@ -94,7 +94,7 @@ exports.show_alumn = async function (req, res, next) {
     try {
         let result = await alumno.findOne({
             where: {
-                id: req.params.id
+                alumno_id: req.params.id
                 /*
                 $or: [
                     {
@@ -139,12 +139,14 @@ exports.show_alumn = async function (req, res, next) {
     }
 };
 
-/*
-exports.alumn_locations = async function (req, res, next) {
+
+exports.alumn_documentacion = async function (req, res, next) {
     try {
         const alumn = await alumno.findOne({
-            where:{id_alumn:req.params.id},
-            include:['locations']
+            where:{alumno_id:req.params.id},
+            include:['documentacion']
+        }).catch( reason => {
+                console.log(reason);
         });
         if(!alumn) return res.status(404).send("alumn nor found");
         return res.send(alumn);
@@ -153,6 +155,53 @@ exports.alumn_locations = async function (req, res, next) {
     }
 };
 
+/*
+exports.alumn_carrera = async function (req, res, next) {
+    try {
+        const alumn = await alumno.findOne({
+            where:{alumno_id:req.params.id},
+            include:['carrera']
+        }).catch( reason => {
+            console.log(reason);
+        });
+        if(!alumn) return res.status(404).send("alumn nor found");
+        return res.send(alumn);
+    }catch (e) {
+        return res.status(400).send(e.errors[0].message);
+    }
+};
+*/
+exports.alumn_cuotas_pagos = async function (req, res, next) {
+    try {
+        const alumn = await alumno.findOne({
+            where:{alumno_id:req.params.id},
+            include:['cuotas','pagos']
+        }).catch( reason => {
+            console.log(reason);
+        });
+        if(!alumn) return res.status(404).send("alumn nor found");
+        return res.send(alumn);
+    }catch (e) {
+        return res.status(400).send(e.errors[0].message);
+    }
+};
+
+exports.alumn_full_info = async function (req, res, next) {
+    try {
+        const alumn = await alumno.findOne({
+            where:{alumno_id:req.params.id},
+            include:['cuotas','pagos','documentacion']
+        }).catch( reason => {
+            console.log(reason);
+        });
+        if(!alumn) return res.status(404).send("alumn nor found");
+        return res.send(alumn);
+    }catch (e) {
+        return res.status(400).send(e.errors[0].message);
+    }
+};
+
+/*
 exports.alumn_add_locations = async function (req, res, next) {
 
     const alumn = await alumno.findOne(

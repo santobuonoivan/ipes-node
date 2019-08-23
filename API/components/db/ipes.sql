@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-08-2019 a las 22:57:49
+-- Tiempo de generación: 23-08-2019 a las 22:52:32
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -42,20 +42,29 @@ CREATE TABLE `alumnos` (
   `fechadeinscripcion` date NOT NULL,
   `modalidad` varchar(5) COLLATE latin1_spanish_ci NOT NULL,
   `turno` varchar(5) COLLATE latin1_spanish_ci NOT NULL,
-  `anio_carrera` int(11) NOT NULL,
+  `anio_carrera` int(11) DEFAULT NULL,
   `activo` tinyint(1) NOT NULL,
   `fechadenacimiento` date NOT NULL,
   `direccion` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
   `tel` varchar(25) COLLATE latin1_spanish_ci DEFAULT NULL,
   `celular` varchar(25) COLLATE latin1_spanish_ci DEFAULT NULL,
   `estadocivil` varchar(30) COLLATE latin1_spanish_ci DEFAULT NULL,
-  `secundario` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
+  `secundario` varchar(70) COLLATE latin1_spanish_ci DEFAULT NULL,
   `email` varchar(70) COLLATE latin1_spanish_ci NOT NULL,
   `facebook` varchar(50) COLLATE latin1_spanish_ci DEFAULT NULL,
   `trabajo` varchar(70) COLLATE latin1_spanish_ci DEFAULT NULL,
-  `conocio` varchar(250) COLLATE latin1_spanish_ci NOT NULL,
-  `promo` varchar(250) COLLATE latin1_spanish_ci NOT NULL
+  `conocio` varchar(250) COLLATE latin1_spanish_ci DEFAULT NULL,
+  `promo` varchar(250) COLLATE latin1_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `alumnos`
+--
+
+INSERT INTO `alumnos` (`alumno_id`, `dni`, `nombre`, `apellido`, `sexo`, `legajo`, `id_carrera`, `fechadeinscripcion`, `modalidad`, `turno`, `anio_carrera`, `activo`, `fechadenacimiento`, `direccion`, `tel`, `celular`, `estadocivil`, `secundario`, `email`, `facebook`, `trabajo`, `conocio`, `promo`) VALUES
+(1, 111111, 'ivan', 'lopez', 'M', 1, NULL, '2019-08-23', 'p', 'm', 1, 1, '1992-02-19', 'asd 123', 'asd 123', '123455123123', 'soltero', 'bachiller', 'asd@asd.com.ar', NULL, 'empleado', 'llamada', '50%'),
+(2, 999, 'Serene', 'Igonet', 'F', 1, NULL, '2017-08-28', 'P', 'm', 4, 1, '1932-02-15', '60 Dunning Crossing', '(830) 9096281', '+7 202 904 0177', 'separado', 'tecnico', 'sigonet0@japanpost.jp', 'Serene Igonet', 'Brightdog', NULL, NULL),
+(3, 2222, 'Serene', 'Igonet', 'F', 1, NULL, '2017-08-28', 'P', 'm', 4, 0, '1932-02-15', '60 Dunning Crossing', '(830) 9096281', '+7 202 904 0177', 'separado', 'tecnico', 'sigonet0@japanpost.jp', 'Serene Igonet', 'Brightdog', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -100,6 +109,13 @@ CREATE TABLE `caja` (
   `id_comienzo_salida` int(9) UNSIGNED DEFAULT NULL,
   `id_fin_salida` int(9) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `caja`
+--
+
+INSERT INTO `caja` (`id_caja`, `usuario_id`, `importe`, `fechayhora`, `detalle`, `id_comienzo_entrada`, `id_fin_entrada`, `id_comienzo_salida`, `id_fin_salida`) VALUES
+(1, 1, '0', '1992-01-01 00:00:00', 'test', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -164,7 +180,7 @@ CREATE TABLE `concepto_type` (
 DROP TABLE IF EXISTS `cuotas`;
 CREATE TABLE `cuotas` (
   `id` int(9) UNSIGNED NOT NULL,
-  `id_alumno` int(9) UNSIGNED NOT NULL,
+  `alumno_id` int(9) UNSIGNED NOT NULL,
   `concepto` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
   `fecha` date NOT NULL,
   `importe` int(11) NOT NULL,
@@ -326,6 +342,14 @@ CREATE TABLE `movimientos` (
   `movimiento_type_id` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `movimientos`
+--
+
+INSERT INTO `movimientos` (`id_operacion`, `usuario_id`, `id_caja`, `importe`, `fechayhora`, `detalle`, `movimiento_type_id`) VALUES
+(1, 1, 1, '2000', '1992-01-01 00:00:00', 'pago cuota', 1),
+(2, 1, 1, '4000', '1992-01-01 00:00:00', 'pagoinscripcion', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -340,6 +364,13 @@ CREATE TABLE `movimientos_types` (
   `cuenta_contable` varchar(100) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `movimientos_types`
+--
+
+INSERT INTO `movimientos_types` (`movimiento_type_id`, `cuenta_type`, `internal_code`, `cuenta_contable`) VALUES
+(1, 'caja', '000001', 'caja y banco');
+
 -- --------------------------------------------------------
 
 --
@@ -349,7 +380,7 @@ CREATE TABLE `movimientos_types` (
 DROP TABLE IF EXISTS `pagos`;
 CREATE TABLE `pagos` (
   `id` int(9) UNSIGNED NOT NULL,
-  `id_alumno` int(9) UNSIGNED NOT NULL,
+  `alumno_id` int(9) UNSIGNED NOT NULL,
   `concepto` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
   `fecha` date NOT NULL,
   `importe` int(11) NOT NULL,
@@ -382,6 +413,29 @@ CREATE TABLE `permissions` (
   `action` varchar(50) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `permissions`
+--
+
+INSERT INTO `permissions` (`permission_id`, `title`, `module`, `action`) VALUES
+(1, 'Users Module insert', 'users', 'insert'),
+(2, 'Users Module delete', 'users', 'delete'),
+(3, 'Users Module show', 'users', 'show'),
+(4, 'Users Module list', 'users', 'list'),
+(5, 'Users Module update', 'users', 'update'),
+(6, 'Roles Module show', 'roles', 'show'),
+(7, 'Roles Module list', 'roles', 'list'),
+(8, 'Roles Module insert', 'roles', 'insert'),
+(9, 'Roles Module update', 'roles', 'update'),
+(10, 'Roles Module delete', 'roles', 'delete'),
+(11, 'Permissions show', 'permissions', 'show'),
+(12, 'Permissions list', 'permissions', 'list'),
+(13, 'Permissions insert', 'permissions', 'insert'),
+(14, 'Permissions update', 'permissions', 'update'),
+(15, 'Permissions delete', 'permissions', 'delete'),
+(16, 'User-Roles add user roles', 'user-roles', 'user_add_role'),
+(17, 'User-Roles remove user roles', 'user-roles', 'user_remove_roles');
+
 -- --------------------------------------------------------
 
 --
@@ -394,6 +448,28 @@ CREATE TABLE `permission_role` (
   `role_id` int(9) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `permission_role`
+--
+
+INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
+(3, 3),
+(4, 3),
+(1, 4),
+(2, 4),
+(5, 4),
+(6, 9),
+(7, 9),
+(8, 9),
+(9, 9),
+(10, 9),
+(11, 10),
+(12, 10),
+(13, 10),
+(14, 10),
+(15, 10),
+(17, 15);
+
 -- --------------------------------------------------------
 
 --
@@ -405,6 +481,17 @@ CREATE TABLE `permission_user` (
   `usuario_id` int(9) UNSIGNED NOT NULL,
   `permission_id` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `permission_user`
+--
+
+INSERT INTO `permission_user` (`usuario_id`, `permission_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 5),
+(1, 6);
 
 -- --------------------------------------------------------
 
@@ -419,6 +506,34 @@ CREATE TABLE `roles` (
   `parent` int(9) UNSIGNED DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `name`, `parent`, `is_active`) VALUES
+(1, 'SUPER_ADMIN', NULL, 1),
+(2, 'SYSTEM_ADMIN', 1, 1),
+(3, 'USERS_READER', 8, 1),
+(4, 'USERS_WRITER', 8, 1),
+(5, 'SELF_USER', 8, 1),
+(6, 'SELF_ROLES', 8, 1),
+(7, 'SELF_PERMISSIONS', 10, 1),
+(8, 'USERS_ADMIN', 2, 1),
+(9, 'ROLES_ADMIN', 2, 1),
+(10, 'PERMISSIONS_ADMIN', 2, 1),
+(11, 'USER_PERMISSIONS_ADMIN', 8, 1),
+(12, 'SENSORS_ADMIN', 14, 1),
+(13, 'CONSUMES_ADMIN', 14, 1),
+(14, 'BUSINESS_ADMIN', 2, 1),
+(15, 'CLIENTS_ADMIN', 14, 1),
+(16, 'USER_ROLES_ADMIN', 8, 1),
+(17, 'LOCATIONS_ADMIN', 14, 1),
+(18, 'SECTORS_ADMIN', 14, 1),
+(19, 'SENSOR_TYPES_ADMIN', 14, 1),
+(20, 'SENSORS_ADMIN', 14, 1),
+(21, 'ALARM_RULES_ADMIN', 14, 1),
+(36, 'LOCATIONS_ADMIN', 14, 1);
 
 -- --------------------------------------------------------
 
@@ -469,7 +584,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`usuario_id`, `apellido`, `nombre`, `dni`, `clave`, `usuario`, `fechadecumpleanios`, `email`, `perfil`, `turno`, `tel`, `celular`, `direccion1`, `direccion2`, `provincia`, `ciudad`, `codigopostal`, `is_active`, `profile_image`, `country`) VALUES
-(1, 'santobuono', 'ivan', 36485205, '$2a$10$d0zxAgzwMy1e5I2jq.8NweaNh.6gDMG1FDzNwzjn5ndSTX.JNJdzG', 'mecalux', '1992-02-19', 'ivan@ivan.com', 'master', NULL, '42503412', '1130881719', 'calle falsa 123 dto 1', 'calle falsa 123 dto 2', 'BS AS', 'quilmes', '1878', 1, NULL, 'argentina');
+(1, 'santobuono', 'ivan', 36485205, '$2a$10$d0zxAgzwMy1e5I2jq.8NweaNh.6gDMG1FDzNwzjn5ndSTX.JNJdzG', 'mecalux', '1992-02-19', 'ivan@ivan.com', 'master', NULL, '42503412', '1130881719', 'calle falsa 123 dto 1', 'calle falsa 123 dto 2', 'BS AS', 'quilmes', '1878', 1, NULL, 'argentina'),
+(2, 'benitez', 'leonel', 36485205, '$2a$10$cq6f2gVA054TKNP0Rz8TF.BIMpeMIY1YpsS6UZNsvyVCP0gJqcb/q', 'mecalux2', '1992-02-19', 'leonle@leonel.com', 'empleado', NULL, '42503412', '1130881719', 'calle falsa 123 dto 1', 'calle falsa 123 dto 2', 'BS AS', 'quilmes', '1878', 1, NULL, 'argentina');
 
 -- --------------------------------------------------------
 
@@ -482,6 +598,13 @@ CREATE TABLE `user_roles` (
   `usuario_id` int(9) UNSIGNED NOT NULL,
   `role_id` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `user_roles`
+--
+
+INSERT INTO `user_roles` (`usuario_id`, `role_id`) VALUES
+(1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -548,7 +671,7 @@ ALTER TABLE `concepto_type`
 --
 ALTER TABLE `cuotas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `cuotas_alumno_FK` (`id_alumno`);
+  ADD KEY `cuotas_alumno_FK` (`alumno_id`);
 
 --
 -- Indices de la tabla `departamentos`
@@ -638,7 +761,7 @@ ALTER TABLE `movimientos_types`
 --
 ALTER TABLE `pagos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `pagos_alumno_FK` (`id_alumno`);
+  ADD KEY `pagos_alumno_FK` (`alumno_id`);
 
 --
 -- Indices de la tabla `periodo`
@@ -701,7 +824,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `alumno_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `alumno_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `carga_horaria`
@@ -755,7 +878,7 @@ ALTER TABLE `modalidades`
 -- AUTO_INCREMENT de la tabla `movimientos_types`
 --
 ALTER TABLE `movimientos_types`
-  MODIFY `movimiento_type_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `movimiento_type_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
@@ -773,13 +896,13 @@ ALTER TABLE `periodo`
 -- AUTO_INCREMENT de la tabla `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permission_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `permission_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `role_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `turnos`
@@ -791,7 +914,7 @@ ALTER TABLE `turnos`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `usuario_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `usuario_id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -834,7 +957,7 @@ ALTER TABLE `carreras`
 -- Filtros para la tabla `cuotas`
 --
 ALTER TABLE `cuotas`
-  ADD CONSTRAINT `cuotas_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`alumno_id`);
+  ADD CONSTRAINT `cuotas_alumno_FK` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`alumno_id`);
 
 --
 -- Filtros para la tabla `dependencies`
@@ -883,7 +1006,7 @@ ALTER TABLE `movimientos`
 -- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  ADD CONSTRAINT `pagos_alumno_FK` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`alumno_id`);
+  ADD CONSTRAINT `pagos_alumno_FK` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`alumno_id`);
 
 --
 -- Filtros para la tabla `permission_role`

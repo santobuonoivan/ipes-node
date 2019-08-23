@@ -33,6 +33,8 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false
 		}
 	}, {
-		tableName: 'carreras'
+		tableName: 'carreras',
+		underscored: true,
+		timestamps: false
 	});
 };

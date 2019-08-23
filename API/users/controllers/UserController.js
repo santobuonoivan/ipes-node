@@ -104,7 +104,10 @@ exports.delete_user = async function (req, res, next) {
 
 exports.show_user = async function (req, res, next) {
     try{
-        const result = await users.findOne({where:{usuario_id:req.params.id}});
+        const result = await users.findOne({
+            where:{usuario_id:req.params.id},
+            include:['user_roles']
+        });
         if(!result) return res.send({message: 'user not found'});
         console.log(result);
         return res.send(result);

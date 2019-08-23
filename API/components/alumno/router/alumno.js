@@ -23,9 +23,15 @@ router.post('/:id',[cors()/*, authMiddleware, authorization('clients','delete')*
 /* GET ONE */
 router.get('/:id',[cors()/*, authMiddleware, authorization('clients', 'show')*/], alumnsController.show_alumn);
 
-/*
-router.get('/:id/locations',[cors()/*, authMiddleware, authorization('clients', 'list_client_locations')], clientsController.client_locations);
 
+router.get('/:id/doc',[cors()/*, authMiddleware, authorization('clients', 'list_client_locations')*/], alumnsController.alumn_documentacion);
+//router.get('/:id/carrera',[cors()/*, authMiddleware, authorization('clients', 'list_client_locations')*/], alumnsController.alumn_carrera);
+
+router.get('/:id/full_info',[cors()/*, authMiddleware, authorization('clients', 'list_client_locations')*/], alumnsController.alumn_full_info);
+router.get('/:id/cuotas_pagos',[cors()/*, authMiddleware, authorization('clients', 'list_client_locations')*/], alumnsController.alumn_cuotas_pagos);
+
+
+/*
 router.post('/:id/addlocations',[cors()/*, authMiddleware, authorization('clients', 'add_client_locations')], clientsController.client_add_locations);
 
 router.post('/:id/removelocations',[cors()/*, authMiddleware, authorization('clients', 'remove_client_locations')], clientsController.client_remove_locations);

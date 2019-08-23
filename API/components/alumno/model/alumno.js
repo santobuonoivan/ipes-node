@@ -46,7 +46,7 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		anio_carrera: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false
+			allowNull: true
 		},
 		activo: {
 			type: DataTypes.INTEGER(1),
@@ -74,7 +74,7 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		secundario: {
 			type: DataTypes.STRING(70),
-			allowNull: false
+			allowNull: true
 		},
 		email: {
 			type: DataTypes.STRING(70),
@@ -90,13 +90,15 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		conocio: {
 			type: DataTypes.STRING(250),
-			allowNull: false
+			allowNull: true
 		},
 		promo: {
 			type: DataTypes.STRING(250),
-			allowNull: false
+			allowNull: true
 		}
 	}, {
-		tableName: 'alumnos'
+		tableName: 'alumnos',
+		underscored: true,
+		timestamps: false
 	});
 };

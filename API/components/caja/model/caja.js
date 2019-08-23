@@ -45,6 +45,8 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		}
 	}, {
-		tableName: 'caja'
+		tableName: 'caja',
+		underscored:true,
+		timestamps: false
 	});
 };

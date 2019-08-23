@@ -23,11 +23,11 @@ var rolesRoutes = require('./users/routes/RoleRoutes');
 var permissionsRoutes = require('./users/routes/PermissionsRoutes');
 var userRolerRoutes = require('./users/routes/UserRolesRoutes');
 var userPermissions = require('./users/routes/UserPermissionsRoutes');
-
-/*
 var alumnRoutes = require('./components/alumno/router/alumno');
 var cajaRoutes = require('./components/caja/router/caja');
+/*
 var carrerasRoutes = require('./components/carreras/router/carrera');
+ */
 var cuotasRoutes = require('./components/cuotas/router/cuotas');
 var materiasRoutes = require('./components/materias/router/materia');
 
@@ -48,17 +48,16 @@ app.use('/roles', rolesRoutes);
 app.use('/permissions', permissionsRoutes);
 app.use('/userroles', userRolerRoutes);
 app.use('/userpermissions', userPermissions);
-/*
 app.use('/alumn', alumnRoutes);
 
 /* TODO  se impleenta en los insert de alumno */
 //app.use('/documentacion', documentacionRoutes);
-/*
-app.use('/caja',cajaRoutes);
 
+app.use('/caja',cajaRoutes);
+/*
 
 app.use('/cuotas', cuotasRoutes);
-/* app.use('/pagos', pagosRoutes); */
+ app.use('/pagos', pagosRoutes); */
 /*
 app.use('/carrera', carrerasRoutes);
 //app.use('/modalidades', modalidadesRoutes);

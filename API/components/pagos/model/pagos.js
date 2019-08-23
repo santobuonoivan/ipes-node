@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
 			primaryKey: true,
 			autoIncrement: true
 		},
-		id_alumno: {
+		alumno_id: {
 			type: DataTypes.INTEGER(9).UNSIGNED,
 			allowNull: false,
 			references: {
@@ -33,6 +33,8 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		}
 	}, {
-		tableName: 'pagos'
+		tableName: 'pagos',
+		underscored: true,
+		timestamps: false
 	});
 };
