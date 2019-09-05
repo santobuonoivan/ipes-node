@@ -1,10 +1,11 @@
 import React from 'react';
-import Welcome from './components/Welcome';
+import Home from './components-api/home';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
   return (
-    <Welcome name="Pedro2"/>
+    <Home/>
   );
 }
 
