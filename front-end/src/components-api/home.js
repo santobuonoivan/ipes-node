@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MenuPrincipal from './menus/menu_principal';
-import MenuSecundary from './menus/menu_secundary';
+import { MenuSecundary } from './menus/menu_secundary';
 import './component.css';
 
 class Home extends Component {
@@ -30,7 +30,9 @@ class Home extends Component {
             <MenuSecundary menu={this.state.menuSeleccionado}/>: null
           }
         </div>
-        <div key="workspace"></div>
+        <div key="workspace">
+
+        </div>
       </div>
     );
   }

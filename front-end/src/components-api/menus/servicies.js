@@ -17,7 +17,7 @@
     };
 */
 const searchUser = () => {
-    const filt = document.getElementById('txtSearch').value;
+    //const filt = document.getElementById('txtSearch').value;
     const url = 'http://localhost:5000/users/';
         
     const miInit = { 

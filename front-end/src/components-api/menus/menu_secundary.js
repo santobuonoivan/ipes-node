@@ -1,20 +1,22 @@
 import React,{Component} from 'react';
 import {ButtonGroup,Button,InputGroup,FormControl} from 'react-bootstrap';
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import withRouter from 'react-router-dom';
 
 class MenuSecundary extends Component{
+
+
   render() {
     const { buttons } = this.props.menu;
     return (
       <ButtonGroup vertical >
-        <InputGroup placeholder="DNI, Apellido, Carrera">
+        { buttons.length !== 0 ? <InputGroup> 
             <FormControl
-            id="txtSearch"
-            type="text"
-            placeholder="Input group example"
-            aria-label="Input group example"
-            aria-describedby="btnGroupAddon"
-          />
-        </InputGroup>
+              id="txtSearch"
+              type="text"
+              placeholder="DNI, Apellido, Carrera"
+            />
+          </InputGroup> : null }
         { buttons.map( (item, i)=> ( <Button key={i} variant="dark" onClick={()=>item.onClick()}>{item.name}</Button> ))}
       </ButtonGroup>
     );
@@ -22,4 +24,4 @@ class MenuSecundary extends Component{
 }
 
 
-export default MenuSecundary;
+export default withRouter( MenuSecundary );
