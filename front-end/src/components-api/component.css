@@ -3,4 +3,14 @@
     min-width: 150px;
     height: 100vh;
     background: #343a40;
+    float:left;
+}
+.div-workspace {
+    height: 100vh;
+    width: calc(100% - 150px);
+    background: red;
+    float:right;
+}
+.div-content {
+    width: 100%;
 }

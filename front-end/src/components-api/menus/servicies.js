@@ -16,7 +16,9 @@
     close: this.close,
     };
 */
-const searchUser = () => {
+
+
+const searchUser = (whatRender) => {
     //const filt = document.getElementById('txtSearch').value;
     const url = 'http://localhost:5000/users/';
         
@@ -31,68 +33,89 @@ const searchUser = () => {
     
     fetch(url,miInit)
     .then( data => (data.json()) )
-    .then( otra_data => { console.log( otra_data ) } )
+    .then( otra_data => { 
+        whatRender({component:'grid_user', users: otra_data});
+    } )
     .catch( (e) => { console.log(e) } )
 }
+
+
+const whatRender = 'Prueba';
 const menus = {
     alumn: {
         buttons: [{
             name: 'Buscar Alumno',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Agregar Alumno',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Lista Alumno',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         }]    
     },
     user: {
         buttons: [{
             name: 'Buscar Usuario',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Agregar Usuario',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Lista Usuario',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         }]
     },
     adm: {
         buttons: [{
             name: 'Buscar Alumno',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Consultar',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Deuda',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'FLUJO',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Registro',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         }]
     },
     caja: {
         buttons: [{
             name: 'Abrir',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Entrada',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Salida',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Cerrar',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         },{
             name: 'Estadisticas',
-            onClick: searchUser
+            onClick: searchUser,
+            whatRender:''
         }]
     },
 };

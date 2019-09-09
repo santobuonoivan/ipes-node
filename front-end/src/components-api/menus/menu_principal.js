@@ -8,7 +8,7 @@ class MunuPrincipal extends Component {
         const { action } =this.props
         return (
         <Navbar bg="dark"  variant="dark" expand="lg">
-            <Navbar.Brand href="#home" onClick={()=>action({ buttons: []})} >Home</Navbar.Brand>
+            <Navbar.Brand href="/" onClick={()=>action({ buttons: []})} >Home</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
