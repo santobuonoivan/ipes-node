@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
+import { setMenu, setWhatRender } from './actions';
+import { store } from './store';
 import MenuPrincipal from './menus/menu_principal';
-import { createStore } from 'redux';
 import MenuSecundary from './menus/menu_secundary';
 import './component.css';
 import Prueba from './menus/Prueba';
 import GirdUser from './grids/grid_users';
+import { from } from 'rxjs';
 
-const store = createStore( () => {}, window.__REDUX_DEVTOOLS_EXTENSION__ && Window.__REDUX_DEVTOOLS_EXTENSION__());
+
 
 class Home extends Component {
   
@@ -22,14 +24,12 @@ class Home extends Component {
   };
   
   setMenu(args){
-    const action = { type: 'setMenu', value: args };
-    store.dispatch( action );
+    store.dispatch( setMenu(args) );
     //this.setState({menuSeleccionado: args})
   }
 
   setWhatRender(response){
-    const action = { type: 'setWhatRender', value: {component: response.component,users: response.users}};
-    store.dispatch( action );
+    store.dispatch( setWhatRender(response) );
     //this.setState({component: response.component,users: response.users});
   }
   
