@@ -31,16 +31,15 @@ const searchUser = (whatRender) => {
     mode: 'cors',
     cache: 'default' };
     
-    fetch(url,miInit)
+    const res = fetch(url,miInit)
     .then( data => (data.json()) )
     .then( otra_data => { 
         whatRender({component:'grid_user', users: otra_data});
+
     } )
     .catch( (e) => { console.log(e) } )
+    return res
 }
-
-
-const whatRender = 'Prueba';
 const menus = {
     alumn: {
         buttons: [{
