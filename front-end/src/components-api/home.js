@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import MenuPrincipal from './menus/menu_principal';
-//import { BrowserRouter, Route, Link, withRouter} from "react-router-dom";
+import { createStore } from 'redux';
 import MenuSecundary from './menus/menu_secundary';
 import './component.css';
 import Prueba from './menus/Prueba';
 import GirdUser from './grids/grid_users';
+
+const store = createStore( () => {}, window.__REDUX_DEVTOOLS_EXTENSION__ && Window.__REDUX_DEVTOOLS_EXTENSION__());
 
 class Home extends Component {
   
@@ -19,13 +21,16 @@ class Home extends Component {
     };
   };
   
-  getMenu(args){
-    this.setState({menuSeleccionado: args})
+  setMenu(args){
+    const action = { type: 'setMenu', value: args };
+    store.dispatch( action );
+    //this.setState({menuSeleccionado: args})
   }
 
-  getWhatRender(response){
-    console.log(response);
-    this.setState({component: response.component,users: response.users});
+  setWhatRender(response){
+    const action = { type: 'setWhatRender', value: {component: response.component,users: response.users}};
+    store.dispatch( action );
+    //this.setState({component: response.component,users: response.users});
   }
   
   render() {
