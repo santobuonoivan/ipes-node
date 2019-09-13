@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Navbar,Nav,Form,FormControl,Button} from 'react-bootstrap';
 import menus from './servicies';
 
-class MunuPrincipal extends Component {
+const MunuPrincipal = props => {
         
-    render() {
-        const { action } =this.props
-        return (
+    const { action } = props;
+
+    return (
         <Navbar bg="dark"  variant="dark" expand="lg">
             <Navbar.Brand href="/" onClick={()=>action({ buttons: []})} >Home</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -24,12 +25,11 @@ class MunuPrincipal extends Component {
             </Form>
             </Navbar.Collapse>
         </Navbar>
-        );
-    }
+    );
 }
-/* TODO add propstypes
+
 MunuPrincipal.protoTypes = {
-    goToHome, goToUserMenu, goToAlumnMenu, goToADMMenu, goToCaja, close,
-}*/
+    action: PropTypes.func.isRequired,
+}
 
 export default MunuPrincipal;
