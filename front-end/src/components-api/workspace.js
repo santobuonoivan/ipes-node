@@ -5,11 +5,11 @@ import GridUser from './grids/grid_users';
 
 const Workspace = (props) => {
 
-    const { whatRender, response } = props;
+    const { component, response } = props.whatRender;
 
     return (
-        ( whatRender === '' ) ? <Prueba/> : 
-        ( whatRender === 'grid_user' ) ? <GridUser users = { response }/> : null
+        ( component === '' ) ? <Prueba/> : 
+        ( component === 'grid_user' ) ? <GridUser users = { response }/> : null
     );
 
 };

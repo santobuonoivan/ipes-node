@@ -9,7 +9,7 @@ const MenuWorkContainer = (props) => {
     const setSomethingToRender = (response) => {
       props.setWhatRender(response);
     }
-    console.log(props)
+    //console.log(props)
 
     return (
         props.menu &&

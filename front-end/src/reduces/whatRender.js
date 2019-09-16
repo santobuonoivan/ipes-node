@@ -3,7 +3,7 @@ import { SET_WHAT_RENDER } from './../actions';
 const whatRender = (state = 0, action) => {
     switch (action.type) {
         case SET_WHAT_RENDER:
-            return { ...state, whatRender: action.value}
+            return { ...state = action.value}
         default:
             break;
     }

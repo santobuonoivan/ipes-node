@@ -15,7 +15,7 @@ const searchUser = (whatRender) => {
     .then( data => (data.json()) )
     .then( otra_data => { 
         console.log(otra_data);
-        whatRender({component:'grid_user', users: otra_data});
+        whatRender({component:'grid_user', response: otra_data});
 
     } )
     .catch( (e) => { console.log(e) } )
