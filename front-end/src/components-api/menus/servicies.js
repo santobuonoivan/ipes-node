@@ -16,7 +16,6 @@ const searchUser = (whatRender) => {
     .then( otra_data => { 
         console.log(otra_data);
         whatRender({component:'grid_user', response: otra_data});
-
     } )
     .catch( (e) => { console.log(e) } )
     return res
@@ -26,76 +25,60 @@ const menus = {
         buttons: [{
             name: 'Buscar Alumno',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Agregar Alumno',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Lista Alumno',
             onClick: searchUser,
-            whatRender:''
         }]    
     },
     user: {
         buttons: [{
             name: 'Buscar Usuario',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Agregar Usuario',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Lista Usuario',
             onClick: searchUser,
-            whatRender:''
         }]
     },
     adm: {
         buttons: [{
             name: 'Buscar Alumno',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Consultar',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Deuda',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'FLUJO',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Registro',
             onClick: searchUser,
-            whatRender:''
         }]
     },
     caja: {
         buttons: [{
             name: 'Abrir',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Entrada',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Salida',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Cerrar',
             onClick: searchUser,
-            whatRender:''
         },{
             name: 'Estadisticas',
             onClick: searchUser,
-            whatRender:''
         }]
     },
 };
