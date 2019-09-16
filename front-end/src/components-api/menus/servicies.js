@@ -1,23 +1,3 @@
-/*
-
-  goToHome = () => { alert('home') }
-  goToUserMenu = () => { alert('user-menu') }
-  goToAlumnMenu = () => { this.setState({ menu: 'alumn'}); }
-  goToADMMenu = () => { alert('adm-menu') }
-  goToCaja = () => { alert('caja-menu') }
-  close = () => { alert('close') }
-
-    const events = {
-    goToHome: this.goToHome,
-    goToUserMenu: this.goToUserMenu,
-    goToAlumnMenu: this.goToAlumnMenu,
-    goToADMMenu: this.goToADMMenu,
-    goToCaja: this.goToCaja,
-    close: this.close,
-    };
-*/
-
-
 const searchUser = (whatRender) => {
     //const filt = document.getElementById('txtSearch').value;
     const url = 'http://localhost:5000/users/';
@@ -34,6 +14,7 @@ const searchUser = (whatRender) => {
     const res = fetch(url,miInit)
     .then( data => (data.json()) )
     .then( otra_data => { 
+        console.log(otra_data);
         whatRender({component:'grid_user', users: otra_data});
 
     } )

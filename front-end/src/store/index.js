@@ -1,11 +1,11 @@
 import { createStore } from 'redux';
-import { menu } from './../reduces/menu';
+import reducer from './../reduces/index';
 
 const initialState = {
-    menuSeleccionado:[],
-    component:null,
-    users:null,
+    menu:{},
+    whatRender: '',
+    response: '',
 };
 
-export const store = createStore( menu, initialState,
+export const store = createStore( reducer, initialState,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

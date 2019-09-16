@@ -1,11 +1,13 @@
 import { SET_MENU } from './../actions';
 
-export const menu = (state, action) => {
+const menu = (state = {}, action) => {
     switch (action.type) {
         case SET_MENU:
-            return { ...state, menu: action.value}
+            return { ...state = action.value}
         default:
             break;
     }
     return state;
 }
+
+export default menu;

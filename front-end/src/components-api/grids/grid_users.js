@@ -1,9 +1,8 @@
 import React from 'react';
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 const GridUser = (props) => {
-    const {users} = props;
- console.log(users);
+    const { users } = props;
     return (
         <Table responsive>
             <thead>

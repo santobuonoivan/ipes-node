@@ -9,6 +9,7 @@ const MenuWorkContainer = (props) => {
     const setSomethingToRender = (response) => {
       props.setWhatRender(response);
     }
+    console.log(props)
 
     return (
         props.menu &&
@@ -20,6 +21,7 @@ const MenuWorkContainer = (props) => {
 
 
 MenuWorkContainer.propTypes = {
+    menu: PropTypes.object.isRequired,
     setWhatRender: PropTypes.func.isRequired,
 };
 

@@ -4,19 +4,27 @@ import {ButtonGroup,Button,InputGroup,FormControl} from 'react-bootstrap';
 
 const MenuSecundary = (props) =>{
   
-  const { buttons } = props.menu;
+  const { buttons } = props.menu.menu ? props.menu.menu : props.menu ;
   const { whatRender } = props;
   
   return ( 
+    
     <ButtonGroup vertical >          
-      { buttons.length !== 0 ? <InputGroup> 
-        <FormControl id="txtSearch" type="text" placeholder="DNI, Apellido, Carrera"/>
+      { buttons !== null && buttons !== undefined ? 
+        <InputGroup> 
+          <FormControl id="txtSearch" type="text" placeholder="DNI, Apellido, Carrera"/>
         </InputGroup> : null }
-      { buttons.map( (item, i)=> ( <Button key={i} variant="dark" onClick={()=>item.onClick(whatRender)}>{item.name}</Button> ))}
-    </ButtonGroup>
-     
-  );
-  
+
+      { buttons !== null && buttons !== undefined ?  ( buttons.map( (item, i)=> (
+        <Button 
+          key={i} 
+          variant="dark" 
+          onClick={()=>item.onClick(whatRender)}>
+            {item.name}
+        </Button>
+      ))) : null }
+    </ButtonGroup>     
+  );  
 }
 
 
