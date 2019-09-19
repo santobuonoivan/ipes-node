@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 export const menu = (state = {}, action) => {
     switch (action.type) {
         case SET_MENU:
-            const { buttons } = action.value;
+            const { buttons } = action.payload;
             return { ...state, buttons: buttons }
         default:
             break;
@@ -18,4 +18,4 @@ export const getForecastDataFromCities = createSelector(
     (state,city) => state[city] && state[city].forecastData, forecastData => forecastData);
 */
 export const getMenu = createSelector(
-    state => {}, menu => menu );
+    state => state, menu => menu );

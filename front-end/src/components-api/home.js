@@ -14,7 +14,7 @@ const Home = () => {
       <div className='div-content'>
         <div key='menu-selected' className='div-menu-secundary' >
           <MenuWorkContainer/>
-        </div>
+        </div>        
         <div key="workspace" className='div-workspace' >
             <WorkspaceContainer/>
         </div>

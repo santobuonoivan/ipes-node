@@ -8,14 +8,13 @@ import { getMenu } from './../reduces';
 const MenuWorkContainer = (props) => {
 
     const setSomethingToRender = (response) => {
-      props.setWhatRender(response);
+        props.setWhatRender(response);
     }
-    //console.log(props)
-
+    const { menu } = props;
     return (
-        props.menu &&
+        menu &&
         <MenuSecundary 
-            menu= { props.menu }/* traer el estado menu seleccionado {this.state.menuSeleccionado}*/
+            menu= { menu }/* traer el estado menu seleccionado {this.state.menuSeleccionado}*/
             whatRender= { setSomethingToRender } /* traer el estado menu seleccionado {this.state.getWhatRender}*//>
     );
 }
@@ -23,12 +22,12 @@ const MenuWorkContainer = (props) => {
 
 MenuWorkContainer.propTypes = {
     menu: PropTypes.object.isRequired,
-    dispatchSetWhatRender: PropTypes.func.isRequired,
+    setWhatRender: PropTypes.func.isRequired,
 };
 
 
 const mapDispatchToProps = dispatch => ({
-    setWhatRender : component => dispatch( setWhatRender(component)),
+    setWhatRender : component => dispatch(setWhatRender(component)),
 });
 
 const mapStateToProps = state => ({ menu: getMenu(state) });
