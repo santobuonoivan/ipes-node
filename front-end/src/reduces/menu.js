@@ -1,13 +1,21 @@
 import { SET_MENU } from './../actions';
+import { createSelector } from 'reselect';
 
-const menu = (state = {}, action) => {
+
+export const menu = (state = {}, action) => {
     switch (action.type) {
         case SET_MENU:
-            return { ...state = action.value}
+            const { buttons } = action.value;
+            return { ...state, buttons: buttons }
         default:
             break;
     }
     return state;
 }
 
-export default menu;
+/*
+export const getForecastDataFromCities = createSelector(
+    (state,city) => state[city] && state[city].forecastData, forecastData => forecastData);
+*/
+export const getMenu = createSelector(
+    state => {}, menu => menu );

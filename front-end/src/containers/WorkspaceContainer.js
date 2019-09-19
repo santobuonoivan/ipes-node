@@ -14,7 +14,7 @@ const WorkspaceContainer = (props) => {
 
 
 WorkspaceContainer.propTypes = {
-    whatRender: PropTypes.string.isRequired,
+    whatRender: PropTypes.string,
 };
 
 const mapStateToProps = ({ whatRender, response }) => ({ whatRender, response });

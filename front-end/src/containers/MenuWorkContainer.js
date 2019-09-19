@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setWhatRender } from './../actions';
 import MenuSecundary from './../components-api/menus/menu_secundary';
+import { getMenu } from './../reduces';
 
 const MenuWorkContainer = (props) => {
 
@@ -22,14 +23,14 @@ const MenuWorkContainer = (props) => {
 
 MenuWorkContainer.propTypes = {
     menu: PropTypes.object.isRequired,
-    setWhatRender: PropTypes.func.isRequired,
+    dispatchSetWhatRender: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ menu }) => ({ menu });
 
-const mapDispatchToPropsActions = dispatch => ({
-    setWhatRender : value => dispatch( setWhatRender(value)),
+const mapDispatchToProps = dispatch => ({
+    setWhatRender : component => dispatch( setWhatRender(component)),
 });
+
+const mapStateToProps = state => ({ menu: getMenu(state) });
   
-  
-export default connect( mapStateToProps, mapDispatchToPropsActions)(MenuWorkContainer);
+export default connect( mapStateToProps, mapDispatchToProps)(MenuWorkContainer);

@@ -1,9 +1,9 @@
 import { SET_WHAT_RENDER } from './../actions';
 
-const whatRender = (state = 0, action) => {
+const whatRender = (state = '', action) => {
     switch (action.type) {
         case SET_WHAT_RENDER:
-            return { ...state = action.value}
+            return { ...state, response: action.value.response}
         default:
             break;
     }
