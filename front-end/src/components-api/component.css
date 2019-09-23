@@ -7,10 +7,11 @@
 }
 .div-workspace {
     height: 100vh;
-    width: calc(100% - 150px);
     background: red;
     float:right;
+    flex-grow: 1;
 }
 .div-content {
+    display: flex;
     width: 100%;
 }

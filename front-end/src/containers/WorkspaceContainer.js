@@ -4,20 +4,21 @@ import { connect } from 'react-redux';
 import Workspace from './../components-api/workspace';
 
 const WorkspaceContainer = (props) => {
+    const { whatRender } = props || '';
+    
     return (
-        
         <Workspace 
-            whatRender= { props.whatRender }/* traer el estado menu seleccionado {this.state.menuSeleccionado}*/
+            whatRender= { whatRender }/* traer el estado menu seleccionado {this.state.menuSeleccionado}*/
             /* traer el estado menu seleccionado {this.state.getWhatRender}*//>
     );
 }
 
 
 WorkspaceContainer.propTypes = {
-    whatRender: PropTypes.string,
+    whatRender: PropTypes.object,
 };
 
-const mapStateToProps = ({ whatRender, response }) => ({ whatRender, response });
+const mapStateToProps = ({ whatRender }) => ({ whatRender });
 
 /*
 const mapDispatchToPropsActions = dispatch => ({
