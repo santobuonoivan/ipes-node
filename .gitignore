@@ -78,7 +78,8 @@ API/components/usuario/usuario.php
 API/components/usuario/validarSesion.php
 API/components/usuario/verificarUsuario.php
 API/components/cuotas/cuotas.php
-
+The
+This
 API/clases/*
 API/.idea/*
 .idea
